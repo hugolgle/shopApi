@@ -2,9 +2,6 @@ const express = require("express");
 const app = express();
 const port = 3000;
 
-// Prisma
-const { PrismaClient } = require("@prisma/client");
-
 // Router
 const route = require("./src/route/Route");
 const login = require("./src/route/LoginRoute");
@@ -31,7 +28,7 @@ app.post(
 app.post(
   "/user",
   asyncHandler(async (req, res) => {
-    await route.createUser(req, res);
+    await login.createUser(req, res);
   })
 );
 app.get(
@@ -39,6 +36,21 @@ app.get(
   auth,
   asyncHandler(async (req, res) => {
     await route.getAll(req, res);
+  })
+);
+app.get(
+  "/:model/:id",
+  auth,
+  asyncHandler(async (req, res) => {
+    await route.getById(req, res);
+  })
+);
+
+app.post(
+  "/:model",
+  auth,
+  asyncHandler(async (req, res) => {
+    await route.create(req, res);
   })
 );
 

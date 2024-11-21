@@ -1,48 +1,13 @@
 const { PrismaClient } = require("@prisma/client");
 const ApiError = require("../error/ApiError");
-const bcrypt = require("bcrypt");
+
+// For query
+const excludeFields = require("../service/excludeFields");
+const validateFields = require("../service/validateFields");
 
 class Route {
   static prisma = new PrismaClient();
-
-  static test(req, res) {
-    res.status(200).json({ result: "test" });
-  }
-
-  static async createUser(req, res) {
-    const { firstname, lastname, email, password, address, city } = req.body;
-
-    if (!firstname || !lastname || !email || !password || !address || !city) {
-      throw new ApiError(400, "Missing required fields");
-    }
-
-    const alreadyUser = await this.prisma.user.findUnique({
-      where: { email: email },
-    });
-
-    if (alreadyUser) {
-      throw new ApiError(400, "Email already exists");
-    }
-
-    const role = await this.prisma.role.findUnique({
-      where: { name: "USER" },
-    });
-    const hashPassword = await bcrypt.hash(password, 10);
-    const user = await this.prisma.user.create({
-      data: {
-        firstName: firstname,
-        lastName: lastname,
-        email: email,
-        password: hashPassword,
-        address: address,
-        city: city,
-        role: { connect: { id: role.id } },
-      },
-    });
-
-    res.status(200).json({ result: user });
-  }
-
+  // GET
   static async getAll(req, res) {
     const { model } = req.params;
 
@@ -50,9 +15,58 @@ class Route {
       throw new ApiError(400, "Model not found");
     }
 
-    const user = await this.prisma[model].findMany();
-    res.status(200).json({ result: user });
+    const fields = excludeFields[model] || null;
+    const table = await this.prisma[model].findMany({
+      select: fields || undefined,
+    });
+
+    res.status(200).json({ result: table });
   }
+
+  static async getById(req, res) {
+    const { model, id } = req.params;
+
+    if (!model || !id) {
+      throw new ApiError(400, "Model or ID missing");
+    }
+
+    const fields = excludeFields[model] || null;
+    const table = await this.prisma[model].findUnique({
+      where: { id: parseInt(id) },
+      select: fields || undefined,
+    });
+
+    res.status(200).json({ result: table });
+  }
+
+  // POST
+  static async create(req, res) {
+    const { model } = req.params;
+    const { data } = req.body;
+
+    if (!data || Object.keys(data).length === 0) {
+      throw new ApiError(401, "Bad data or not found");
+    }
+
+    const schema = validateFields[model];
+    if (!schema) {
+      throw new ApiError(400, "Schema of the model not found");
+    }
+
+    // Validation des données par rappport au schéma
+    try {
+      await schema.validate(data, { abortEarly: false }); // abordEarly : permet de récupérer toutes les erreurs
+    } catch (error) {
+      throw new ApiError(400, error.errors.join(", "));
+    }
+
+    const table = await this.prisma[model].create({ data });
+    res.status(200).json({ result: table });
+  }
+
+  // PUT
+
+  // DELETE
 }
 
 module.exports = Route;
