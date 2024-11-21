@@ -45,6 +45,5 @@ app.get(
 app.use(error);
 
 app.listen(port, () => {
-  createRole;
   console.log(`Server is running on port ${port}`);
 });
