@@ -5,12 +5,12 @@ module.exports = (req, res, next) => {
   const auth = req.headers.authorization;
 
   if (auth) {
-    const { user } = jwt.decode(auth);
-
-    console.log(user);
-
-    // Vérif token
     const token = auth.split(" ")[1];
+
+    // Destructuration du token
+    const { user: { id } } = jwt.decode(token);
+    const verify = jwt.verify(token, id.toString());
+    req.user = verify;
 
     next();
   } else {
