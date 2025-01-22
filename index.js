@@ -6,6 +6,7 @@ const port = 3000;
 // Router
 const route = require("./src/route/Route");
 const login = require("./src/route/LoginRoute");
+const checkout = require("./src/route/CheckoutRoute");
 
 // Middleware
 const auth = require("./src/middleware/auth");
@@ -22,7 +23,7 @@ app.use(
 );
 app.use(express.json());
 
-//Route
+// Route
 app.post(
   "/login",
   asyncHandler(async (req, res) => {
@@ -33,6 +34,13 @@ app.post(
   "/user",
   asyncHandler(async (req, res) => {
     await login.createUser(req, res);
+  })
+);
+app.post(
+  "/checkout",
+  auth,
+  asyncHandler(async (req, res) => {
+    await checkout.triggerCheckout(req, res);
   })
 );
 app.get(
@@ -63,7 +71,6 @@ app.use(error);
 app.listen(port, async () => {
   // await StripeService.createProducts();
   // await StripeService.createCheckoutSessions();
-  const products = await StripeService.getProducts();
-  console.log(products);
+  // const products = await StripeService.getProducts();
   console.log(`Server is running on port ${port}`);
 });
