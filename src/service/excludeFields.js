@@ -10,4 +10,13 @@ module.exports = {
     commands: true,
     createdAt: true,
   },
+  product: {
+    name: true,
+    description: true,
+    price: true,
+    brand: true,
+    imagePath: true,
+    reference: true,
+    categoryId: true,
+  },
 };

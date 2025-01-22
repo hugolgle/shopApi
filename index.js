@@ -1,4 +1,5 @@
 const express = require("express");
+const rateLimit = require("express-rate-limit");
 require("dotenv").config();
 const app = express();
 const port = 3000;
@@ -14,12 +15,21 @@ const asyncHandler = require("./src/middleware/asyncHandler");
 
 // Stripe Service
 const StripeService = require("./src/service/stripeService");
+// Limiter Request
+const limiter = rateLimit({
+  windowMs: 1 * 60 * 1000,
+  limit: 6,
+  standardHeaders: "draft-8",
+  legacyHeaders: false,
+});
 
 app.use(
   express.urlencoded({
     extended: true,
-  })
+  }),
+  limiter
 );
+
 app.use(express.json());
 
 //Route
@@ -55,6 +65,22 @@ app.post(
   auth,
   asyncHandler(async (req, res) => {
     await route.create(req, res);
+  })
+);
+
+app.put(
+  "/:model/:id",
+  auth,
+  asyncHandler(async (req, res) => {
+    await route.update(req, res);
+  })
+);
+
+app.delete(
+  "/:model/:id",
+  auth,
+  asyncHandler(async (req, res) => {
+    await route.delete(req, res);
   })
 );
 
