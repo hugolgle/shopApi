@@ -65,8 +65,70 @@ class Route {
   }
 
   // PUT
+  static async update(req, res) {
+    const { model, id } = req.params;
+    const { data } = req.body;
+
+    if (!model || !id) {
+      throw new ApiError(400, "Model or ID missing");
+    }
+
+    if (!data || Object.keys(data).length === 0) {
+      throw new ApiError(401, "Bad data or not found");
+    }
+
+    const items = await this.prisma[model].findUnique({
+      where: { id: parseInt(id) },
+    });
+    if (!items) {
+      throw new ApiError(401, "Items not found");
+    }
+
+    const schema = validateFields[model];
+    if (!schema) {
+      throw new ApiError(400, "Schema of the model not found");
+    }
+
+    try {
+      await schema.validate(data, { abortEarly: false });
+    } catch (error) {
+      throw new ApiError(400, error.errors.join(", "));
+    }
+
+    const fields = excludeFields[model] || null;
+    const updatedEntry = await this.prisma[model].update({
+      where: { id: parseInt(id) },
+      select: fields || undefined,
+      data,
+    });
+
+    res.status(200).json({ result: updatedEntry });
+  }
 
   // DELETE
+  static async delete(req, res) {
+    const { model, id } = req.params;
+
+    if (!model || !id) {
+      throw new ApiError(400, "Model or ID missing");
+    }
+
+    const items = await this.prisma[model].findUnique({
+      where: { id: parseInt(id) },
+    });
+    if (!items) {
+      throw new ApiError(401, "Items not found");
+    }
+
+    try {
+      await this.prisma[model].delete({
+        where: { id: parseInt(id) },
+      });
+      res.status(200).json({ message: "Deleted successfully" });
+    } catch (error) {
+      throw new ApiError(404, "Entry not found or already deleted");
+    }
+  }
 }
 
 module.exports = Route;
