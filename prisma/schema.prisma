@@ -8,22 +8,22 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        Int        @id @default(autoincrement())
   firstName String
   lastName  String
-  email     String   @unique
+  email     String     @unique
   password  String
   address   String?
   city      String?
-  createdAt DateTime @default(now())
-  commands  Commands[]
-  role      Role  @relation(fields: [roleId], references: [id])
+  createdAt DateTime   @default(now())
   roleId    Int
+  commands  Commands[]
+  role      Role       @relation(fields: [roleId], references: [id])
 }
 
 model Role {
-  id    Int      @id @default(autoincrement())
-  name  String   @unique
+  id    Int    @id @default(autoincrement())
+  name  String @unique
   users User[]
 }
 
@@ -31,35 +31,35 @@ model Product {
   id          Int      @id @default(autoincrement())
   name        String
   description String
-  price       Float 
+  price       Float
   brand       String
   reference   String   @unique
   imagePath   String
   categoryId  Int
-  category    Category @relation(fields: [categoryId], references: [id])
   createdAt   DateTime @default(now())
+  category    Category @relation(fields: [categoryId], references: [id])
 }
 
 model Category {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   name      String    @unique
-  createdAt DateTime @default(now())
-  products  Product[] // Relation avec le modèle Product
+  createdAt DateTime  @default(now())
+  products  Product[]
 }
 
 model Commands {
-  id        Int      @id @default(autoincrement()) // Ajout de l'ID manquant
-  reference String   @unique @default(uuid())
-  userId    Int
-  products  String
-  user      User     @relation(fields: [userId], references: [id])
-  status    CommandsState   @relation(fields: [commandStateId], references: [id])
+  id             Int           @id @default(autoincrement())
+  reference      String        @unique @default(uuid())
+  userId         Int
+  products       String
   commandStateId Int
-  createdAt DateTime @default(now())
+  createdAt      DateTime      @default(now())
+  status         CommandsState @relation(fields: [commandStateId], references: [id])
+  user           User          @relation(fields: [userId], references: [id])
 }
 
 model CommandsState {
-  id    Int      @id @default(autoincrement())
-  name  String   @unique
+  id       Int        @id @default(autoincrement())
+  name     String     @unique
   commands Commands[]
 }

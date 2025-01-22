@@ -8,8 +8,11 @@ class LoginRoute extends Route {
     super();
   }
 
+  // TODO : Vérifier le mot de passe, si contient min 8 caractère, majuscule, minuscule etc
   static async createUser(req, res) {
-    const { firstname, lastname, email, password, address, city } = req.body;
+    const {
+      data: { firstname, lastname, email, password, address, city },
+    } = req.body;
 
     if (!firstname || !lastname || !email || !password || !address || !city) {
       throw new ApiError(400, "Missing required fields");
@@ -43,7 +46,9 @@ class LoginRoute extends Route {
   }
 
   static async login(req, res) {
-    const { email, password } = req.body;
+    const {
+      data: { email, password },
+    } = req.body;
 
     if (!email || !password) {
       throw new ApiError(400, "Email or Password not provided");
