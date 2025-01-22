@@ -5,8 +5,7 @@ class StripeService {
 
   static async createCheckoutSessions(products) {
     const session = await this.#stripe.checkout.sessions.create({
-      success_url: process.env.APP_URL + "success",
-      cancel_url: process.env.APP_URL,
+      success_url: "https://example.com/success",
       line_items: products.map((product) => ({
         price_data: {
           currency: "eur",
