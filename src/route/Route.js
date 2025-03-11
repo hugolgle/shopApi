@@ -1,7 +1,7 @@
 const { PrismaClient } = require("@prisma/client");
 const ApiError = require("../error/ApiError");
 
-// For query
+// Importation des schémas de validation et d'exclusion des champs
 const excludeFields = require("../service/excludeFields");
 const validateFields = require("../service/validateFields");
 
@@ -55,7 +55,7 @@ class Route {
 
     // Validation des données par rappport au schéma
     try {
-      await schema.validate(data, { abortEarly: false }); // abordEarly : permet de récupérer toutes les erreurs
+      await schema.validate(data, { abortEarly: false });
     } catch (error) {
       throw new ApiError(400, error.errors.join(", "));
     }

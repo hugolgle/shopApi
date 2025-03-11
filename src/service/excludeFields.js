@@ -1,3 +1,9 @@
+/**
+ *  Service permettant d'exclure les données sensibles, non désirées lors du renvoyer des données
+ *
+ *  Recherche l'objet correspondant au modèle dans la base de données
+ *  et retourne les données demandées
+ */
 module.exports = {
   user: {
     firstName: true,

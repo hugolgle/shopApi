@@ -1,5 +1,11 @@
 const yup = require("yup");
 
+/**
+ *  Service permettant de valider les champs entrés par l'utilisateur
+ *
+ *  Retourne un Boolean en fonction de la validité des champs.
+ *  Si les champs sont invalides, un message d'erreur est retourné.
+ */
 module.exports = {
   user: yup.object({
     firstName: yup.string().required("First name is required"),
@@ -41,7 +47,7 @@ module.exports = {
     reference: yup.string().required("Command reference is required"),
     userId: yup.number().required("User ID is required"),
     commandStateId: yup.number().required("Command state ID is required"),
-    products: yup.string().required("Products are required"), // Assuming it's a list of products in JSON format
+    products: yup.string().required("Products are required"), // Supposons que les produits sont envoyés sous forme d'object JSON
   }),
 
   commandsState: yup.object({

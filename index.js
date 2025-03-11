@@ -14,9 +14,11 @@ const auth = require("./src/middleware/auth");
 const error = require("./src/middleware/error");
 const asyncHandler = require("./src/middleware/asyncHandler");
 
-// Stripe Service
-const StripeService = require("./src/service/stripeService");
-// Limiter Request
+/**
+ * Limiter Request
+ *
+ * Permet de limiter le nombre de requêtes par minute à 6
+ */
 const limiter = rateLimit({
   windowMs: 1 * 60 * 1000,
   limit: 6,
@@ -33,7 +35,7 @@ app.use(
 
 app.use(express.json());
 
-// Route
+// Routes sécurisées renvoyant vers une route personnalisé
 app.post(
   "/login",
   asyncHandler(async (req, res) => {
@@ -53,6 +55,13 @@ app.post(
     await checkout.triggerCheckout(req, res);
   })
 );
+
+/**
+ * Routes sécurisées renvoyant vers une route partagé
+ *
+ * Recherche des données via le paramètre "model" dans l'URL, ainsi que l'ID si nécessaire
+ * Permet de récupérer, créer, mettre à jour ou supprimer des données
+ */
 app.get(
   "/:model",
   auth,
@@ -95,8 +104,5 @@ app.delete(
 app.use(error);
 
 app.listen(port, async () => {
-  // await StripeService.createProducts();
-  // await StripeService.createCheckoutSessions();
-  // const products = await StripeService.getProducts();
   console.log(`Server is running on port ${port}`);
 });

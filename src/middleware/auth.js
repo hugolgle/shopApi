@@ -1,6 +1,9 @@
 const jwt = require("jsonwebtoken");
 const ApiError = require("../error/ApiError");
 
+/**
+ * Permet de vérifier si l'utilisateur est connecté via la vérification du token JWT
+ */
 module.exports = (req, res, next) => {
   const auth = req.headers.authorization;
 
@@ -8,7 +11,9 @@ module.exports = (req, res, next) => {
     const token = auth.split(" ")[1];
 
     // Destructuration du token
-    const { user: { id } } = jwt.decode(token);
+    const {
+      user: { id },
+    } = jwt.decode(token);
     const verify = jwt.verify(token, id.toString());
     req.user = verify;
 

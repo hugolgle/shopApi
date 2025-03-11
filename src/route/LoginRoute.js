@@ -8,7 +8,6 @@ class LoginRoute extends Route {
     super();
   }
 
-  // TODO : Vérifier le mot de passe, si contient min 8 caractère, majuscule, minuscule etc
   static async createUser(req, res) {
     const {
       data: { firstname, lastname, email, password, address, city },
@@ -16,6 +15,25 @@ class LoginRoute extends Route {
 
     if (!firstname || !lastname || !email || !password || !address || !city) {
       throw new ApiError(400, "Missing required fields");
+    }
+
+    // On vérifie sur le mot de passe contient au moins :
+    // - 8 caractères,
+    // - une majuscule,
+    // - une minuscule,
+    // - un chiffre,
+    // - un caractère spécial
+    if (
+      password.length < 8 &&
+      !password.match(/[A-Z]/) &&
+      !password.match(/[a-z]/) &&
+      !password.match(/[0-9]/) &&
+      !password.match(/[^A-Za-z0-9]/)
+    ) {
+      throw new ApiError(
+        400,
+        "Password must contain at least 8 characters, 1 uppercase, 1 lowercase, 1 number and 1 special character"
+      );
     }
 
     const alreadyUser = await this.prisma.user.findUnique({
