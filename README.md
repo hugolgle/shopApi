@@ -7,7 +7,30 @@ Une API RESTful pour gérer les produits, les commandes et les utilisateurs dans
 ## Installation
 
 1. Clonez le dépôt : `git clone https://github.com/hugolgle/shopApi`
-2. Installez les dépendances : `npm install`
+
+### Via docker
+
+```bash
+    docker compose up -d --build
+```
+
+### Manuellement
+
+```bash
+ cd backend && npm install && npm start
+ cd frontend && npm install && npm start
+```
+
+## Exemple variable d'environnement
+
+### Back-end
+
+```env
+    STRIPE_API_KEY=
+    APP_URL=
+```
+
+### Front-end
 
 # Endpoint
 
