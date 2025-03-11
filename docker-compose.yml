@@ -1,0 +1,12 @@
+services:
+  backend:
+    container_name: shopapi-backend
+    build: ./backend/.
+    ports:
+      - "8000:8000"
+
+  frontend:
+    container_name: shopapi-frontend
+    build: ./frontend/.
+    ports:
+      - "3000:3000"

@@ -1,7 +1,7 @@
 const ApiError = require("../error/ApiError");
 const Route = require("./Route");
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 class LoginRoute extends Route {
   constructor() {

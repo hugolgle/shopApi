@@ -2,7 +2,7 @@ const express = require("express");
 const rateLimit = require("express-rate-limit");
 require("dotenv").config();
 const app = express();
-const port = 3000;
+const port = 8000;
 
 // Router
 const route = require("./src/route/Route");
@@ -21,7 +21,7 @@ const asyncHandler = require("./src/middleware/asyncHandler");
  */
 const limiter = rateLimit({
   windowMs: 1 * 60 * 1000,
-  limit: 6,
+  limit: 120,
   standardHeaders: "draft-8",
   legacyHeaders: false,
 });
