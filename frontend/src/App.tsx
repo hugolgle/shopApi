@@ -1,11 +1,15 @@
-import { Button } from "@/components/ui/button";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import Home from "./pages/Home";
 
 function App() {
-  return (
-    <div className="flex flex-col items-center justify-center w-full bg-amber-400">
-      <Button>Click me</Button>
-    </div>
-  );
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Home />,
+    },
+  ]);
+
+  return <RouterProvider router={router} />;
 }
 
 export default App;
