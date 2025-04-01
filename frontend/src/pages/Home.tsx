@@ -9,10 +9,10 @@ function Home() {
   return (
     <main>
       <section className="flex flex-col px-4">
-        <div className="flex h-screen py-4 w-full gap-4">
-          <div className="flex flex-col gap-4 w-1/2">
-            <div className="flex flex-col justify-between rounded-2xl h-3/5 bg-first px-8 py-14 gap-4">
-              <h1 className="text-4xl/18 font-boldonse">
+        <div className="flex py-4 gap-4 flex-col lg:flex-row lg:h-fit">
+          <div className="flex flex-col gap-4 w-full lg:w-1/2">
+            <div className="flex flex-col justify-between rounded-2xl bg-first px-4 py-8 gap-4 h-auto lg:h-3/4">
+              <h1 className="text-2xl/9 font-boldonse lg:text-4xl/18">
                 PRÉPAREZ-VOUS POUR LES VOYAGES D'AFFAIRES DE FIN D'ANNÉE
               </h1>
               <p>
@@ -40,15 +40,15 @@ function Home() {
           <img
             src={imgHome}
             alt="voyage"
-            className="w-1/2 rounded-2xl object-cover"
+            className="rounded-2xl object-cover w-full h-[200px] lg:w-1/2 lg:h-auto lg:aspect-square"
           />
         </div>
       </section>
-      <section className="flex flex-col pt-20 px-4">
+      <section className="flex flex-col pt-10 px-4">
         <div className="flex flex-col items-center py-4 w-full gap-4">
-          <div className="flex flex-col text-center w-2/5 gap-y-2">
+          <div className="flex flex-col text-center gap-y-2 w-4/5">
             <h4 className="text-gray-500 font-black">MEILLEUR PRODUIT</h4>
-            <h1 className="text-2xl font-black font-boldonse">
+            <h1 className="text-xl font-black font-boldonse">
               PACK DE VOYAGE ESSENTIEL
             </h1>
             <p className="text-sm text-gray-500">
@@ -56,8 +56,8 @@ function Home() {
               durabilité et un confort pour tous vos voyages à venir.
             </p>
           </div>
-          <div className="flex gap-x-10 justify-center items-center">
-            <div className="flex flex-col gap-4 w-1/3">
+          <div className="flex flex-col gap-4 justify-center items-center md:flex-row">
+            <div className="flex flex-col gap-4 w-full">
               <Card
                 title="DESIGN SPACIEUX"
                 text="Transportez vos essentiels et plus avec un espace organisé suffisant."
@@ -71,8 +71,12 @@ function Home() {
                 bis
               />
             </div>
-            <img src={bag} alt="sac" className="w-1/3 object-cover" />
-            <div className="flex flex-col gap-4 w-1/3">
+            <img
+              src={bag}
+              alt="sac"
+              className="w-1/3 object-cover hidden md:block"
+            />
+            <div className="flex flex-col gap-4 w-full">
               <Card
                 title="CONFORTABLE"
                 text="Bretelles et dos rembourrés pour un transport confortable."
@@ -89,14 +93,14 @@ function Home() {
           </div>
         </div>
       </section>
-      <section className="flex flex-col pt-20">
+      <section className="flex flex-col pt-10 px-4">
         <div className="flex flex-col items-center py-4 w-full gap-4">
-          <div className="flex w-full justify-between items-end px-20">
-            <div className="flex flex-col w-2/5 gap-y-2">
+          <div className="flex flex-col gap-2 w-full justify-between items-end lg:flex-row lg:px-20">
+            <div className="flex flex-col gap-y-2 lg:w-3/5">
               <h4 className="text-gray-500 font-black">
                 COLLECTION DE SAC À DOS
               </h4>
-              <h1 className="text-2xl font-black font-boldonse">
+              <h1 className="text-xl font-black font-boldonse">
                 PARCOURIR LA COLLECTION DE SAC À DOS
               </h1>
               <p className="text-sm text-gray-500">
@@ -109,12 +113,12 @@ function Home() {
               Voir plus
             </Button>
           </div>
-          <div className="flex gap-x-10 justify-center items-center">
-            <div className="relative w-full !size-4/12">
+          <div className="flex flex-col gap-4 justify-center items-center md:flex-row md:justify-between">
+            <div className="relative hidden justify-center w-full md:block md:w-1/2 lg:flex">
               <img
                 src={imgHome}
                 alt="voyage"
-                className="rounded-2xl size-[650px] object-cover"
+                className="rounded-2xl lg:aspect-square object-cover"
               />
               <div className="absolute rounded-2xl m-5 p-4 flex flex-col gap-y-4 bg-foreground text-accent bottom-0">
                 <h1 className="font-boldonse">PRÉPAREZ-VOUS POUR L'ANNÉE</h1>
@@ -127,17 +131,7 @@ function Home() {
                 </Button>
               </div>
             </div>
-            <div className="grid grid-cols-3 gap-4 w-1/2">
-              <CardProduct
-                img={bag}
-                name="Sac Louis Vuitton"
-                price="1228.00 €"
-              />
-              <CardProduct
-                img={bag}
-                name="Sac Louis Vuitton"
-                price="1228.00 €"
-              />
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:w-1/2">
               <CardProduct
                 img={bag}
                 name="Sac Louis Vuitton"
@@ -162,12 +156,12 @@ function Home() {
           </div>
         </div>
       </section>
-      <section className="flex flex-col pt-20">
+      <section className="flex flex-col pt-10 px-4">
         <div className="flex flex-col items-center py-4 w-full gap-4">
-          <div className="flex w-full justify-between items-end px-20">
-            <div className="flex flex-col w-2/5 gap-y-2">
+          <div className="flex flex-col gap-2 w-full justify-between items-end lg:flex-row lg:px-20">
+            <div className="flex flex-col gap-y-2 lg:w-3/5">
               <h4 className="text-gray-500 font-black">ACCESSOIRES</h4>
-              <h1 className="text-2xl font-black font-boldonse">
+              <h1 className="text-xl font-black font-boldonse">
                 ESSENTIELS POUR SAC À DOS
               </h1>
               <p className="text-sm text-gray-500">
@@ -180,8 +174,8 @@ function Home() {
               Voir plus
             </Button>
           </div>
-          <div className="flex gap-x-10 justify-center items-center">
-            <div className="grid grid-cols-4 gap-4">
+          <div className="flex gap-10 justify-center items-center">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
               <CardProduct
                 img={bag}
                 name="Sac Louis Vuitton"

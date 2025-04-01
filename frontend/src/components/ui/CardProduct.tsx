@@ -8,8 +8,8 @@ function CardProduct({
   name: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col group gap-y-3">
-      <div className="flex justify-center rounded-2xl items-center bg-first w-fit">
+    <div className="flex flex-col group gap-y-3 cursor-pointer">
+      <div className="flex justify-center rounded-2xl items-center bg-first w-fit lg:w-full">
         <img
           src={img}
           alt="product"
