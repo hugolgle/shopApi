@@ -7,44 +7,45 @@ import CardProduct from "@/components/ui/CardProduct";
 
 function Home() {
   return (
-    <main>
-      <section className="flex flex-col px-4">
-        <div className="flex h-screen py-4 w-full gap-4">
-          <div className="flex flex-col gap-4 w-1/2">
-            <div className="flex flex-col justify-between rounded-2xl h-3/5 bg-first px-8 py-14 gap-4">
-              <h1 className="text-4xl/18 font-boldonse">
-                PRÉPAREZ-VOUS POUR LES VOYAGES D'AFFAIRES DE FIN D'ANNÉE
-              </h1>
-              <p>
-                Préparez-vous pour les voyages d'affaires de fin d'année en
-                toute simplicité. Maximisez la productivité, simplifiez les
-                plans et profitez de voyages sans stress.
-              </p>
-              <Button variant="outline" className="w-fit p-5">
-                Acheter maintenant
-              </Button>
-            </div>
-            <div className="flex gap-4 h-2/5">
-              <Card
-                title="LIVRAISON GRATUITE"
-                text="Obtenez de l'aide instantanée de représentants compétents"
-                icon={<DollarSign />}
-              />
-              <Card
-                title="PAIEMENT SÉCURISÉ"
-                text="Profitez d'une expérience d'achat sûre et fluide à chaque fois"
-                icon={<Truck />}
-              />
-            </div>
+    <main className="container mx-auto">
+      <section className="flex flex-col lg:flex-row gap-4 lg:max-h-full xl:max-h-[587px] mb-30">
+        <div className="flex flex-col justify-start items-center gap-4 w-full lg:w-1/2">
+          <div className="flex flex-col justify-between rounded-2xl bg-first p-8 gap-4">
+            <h1 className="text-4xl/18 font-boldonse">
+              PRÉPAREZ-VOUS POUR LES VOYAGES D'AFFAIRES DE FIN D'ANNÉE
+            </h1>
+            <p>
+              Préparez-vous pour les voyages d'affaires de fin d'année en toute
+              simplicité. Maximisez la productivité, simplifiez les plans et
+              profitez de voyages sans stress.
+            </p>
+            <Button variant="outline" className="w-fit p-5">
+              Acheter maintenant
+            </Button>
           </div>
+          <div className="flex gap-4">
+            <Card
+              title="LIVRAISON GRATUITE"
+              text="Obtenez de l'aide instantanée de représentants compétents"
+              icon={<DollarSign />}
+            />
+            <Card
+              title="PAIEMENT SÉCURISÉ"
+              text="Profitez d'une expérience d'achat sûre et fluide à chaque fois"
+              icon={<Truck />}
+            />
+          </div>
+        </div>
+        <div className="w-full lg:w-1/2">
           <img
             src={imgHome}
-            alt="voyage"
-            className="w-1/2 rounded-2xl object-cover"
+            alt="Voyage"
+            className="rounded-2xl w-full h-full object-cover"
           />
         </div>
       </section>
-      <section className="flex flex-col pt-20 px-4">
+
+      <section className="flex flex-col">
         <div className="flex flex-col items-center py-4 w-full gap-4">
           <div className="flex flex-col text-center w-2/5 gap-y-2">
             <h4 className="text-gray-500 font-black">MEILLEUR PRODUIT</h4>
