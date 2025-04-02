@@ -13,3 +13,15 @@ services:
     volumes:
       - ./frontend:/app
       - /app/node_modules
+
+  kuma:
+    container_name: shopapi-monitoring
+    image: louislam/uptime-kuma:latest
+    ports:
+      - "9000:3001"
+    volumes:
+      - uptime-kuma:/app/data
+    restart: always
+
+volumes:
+  uptime-kuma:
