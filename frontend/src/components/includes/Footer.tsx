@@ -14,7 +14,7 @@ function Footer() {
       >
         <div className="h-full">
           <div className="flex items-end justify-between h-full w-full p-4">
-            <div className="flex justify-center gap-x-20 w-1/3 pb-10">
+            <div className="flex flex-col justify-center gap-20 w-1/3 pb-10 md:flex-row">
               <div>
                 <h1 className="text-3xl font-boldonse text-white">80+</h1>
                 <p className="text-white">Nouveaux produits</p>
@@ -24,18 +24,23 @@ function Footer() {
                 <p className="text-white">Clients dans le monde</p>
               </div>
             </div>
-            <div className="flex flex-col items-center w-1/3 gap-y-2 pb-10">
+            <div className="flex flex-col items-center w-1/3 gap-2 pb-10">
               <p className="font-boldonse text-white">
                 ABONNEZ-VOUS À NOTRE NEWSLETTER
               </p>
-              <div className="flex w-fit gap-x-2">
-                <Input type="email" placeholder="Entrez votre email" />
-                <Button>S'abonner</Button>
+              <div className="flex flex-col gap-2 lg:flex-row">
+                <Input
+                  type="email"
+                  placeholder="Entrez votre email"
+                  className="w-full"
+                />
+                <Button variant="secondary">S'abonner</Button>
               </div>
             </div>
           </div>
         </div>
       </section>
+      
       <footer className="flex flex-col pt-20 px-4 bg-black">
         <div className="container mx-auto">
           <div className="flex justify-between">
