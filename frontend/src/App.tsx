@@ -5,6 +5,7 @@ import DashboardLayout from "./components/layouts/DashboardLayout";
 // PAGES
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import Product from "./pages/Product";
 
 function App() {
   const router = createBrowserRouter([
@@ -15,6 +16,7 @@ function App() {
         { path: "/", element: <Home /> },
         { path: "/boutique", element: <Home /> },
         { path: "/login", element: <Login /> },
+        { path: "/product/:id", element: <Product /> },
       ],
     },
     {
