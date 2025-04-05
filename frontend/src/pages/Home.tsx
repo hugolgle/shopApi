@@ -1,8 +1,8 @@
-import Card from "@/components/ui/Card.tsx";
-import { Button } from "@/components/ui/button";
 import { DollarSign, Truck } from "lucide-react";
 import imgHome from "@/assets/img/imgHome.jpg";
 import bag from "@/assets/img/bag.png";
+import { Button } from "@/components/ui/button";
+import Card from "@/components/ui/Card";
 import CardProduct from "@/components/ui/CardProduct";
 
 function Home() {
@@ -121,9 +121,11 @@ function Home() {
                 alt="voyage"
                 className="rounded-2xl lg:aspect-square object-cover"
               />
-              <div className="absolute rounded-2xl m-5 p-4 flex flex-col gap-y-4 bg-foreground text-accent bottom-0">
-                <h1 className="font-boldonse">PRÉPAREZ-VOUS POUR L'ANNÉE</h1>
-                <p className="text-sm">
+              <div className="absolute rounded-2xl m-5 p-4 flex flex-col gap-y-4 bg-foreground bottom-0">
+                <h1 className="font-boldonse text-accent">
+                  PRÉPAREZ-VOUS POUR L'ANNÉE
+                </h1>
+                <p className="text-sm text-accent">
                   Rendez les voyages d'affaires plus faciles avec notre sac à
                   dos valise 2-en-1 breveté.
                 </p>
@@ -137,6 +139,7 @@ function Home() {
                 img={bag}
                 name="Sac Louis Vuitton"
                 price="1228.00 €"
+                id="1"
               />
               <CardProduct
                 img={bag}

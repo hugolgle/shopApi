@@ -54,7 +54,6 @@ function Login() {
             <Input
               id="email"
               type="email"
-              className="border-none bg-background"
               {...formik.getFieldProps("email")}
               placeholder="Votre e-mail"
               autoComplete="new-email"
@@ -70,7 +69,6 @@ function Login() {
             <Input
               id="password"
               type="password"
-              className="border-none bg-background"
               {...formik.getFieldProps("password")}
               placeholder="Votre mot de passe"
               autoComplete="new-password"
