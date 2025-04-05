@@ -2,6 +2,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import MainLayout from "./components/layouts/MainLayout";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import DashboardLayout from "./components/layouts/DashboardLayout";
 
 function App() {
   const router = createBrowserRouter([
@@ -12,6 +13,12 @@ function App() {
         { path: "/", element: <Home /> },
         { path: "/login", element: <Login /> },
       ],
+        { path: "/boutique", element: <Home /> },
+      ],
+    },
+    {
+      element: <DashboardLayout />,
+      children: [{ path: "/test", element: <Home /> }],
     },
   ]);
   return <RouterProvider router={router} />;

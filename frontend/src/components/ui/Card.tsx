@@ -11,14 +11,14 @@ function Card({
 }) {
   return (
     <div
-      className={`flex w-full flex-col justify-end  p-4 gap-y-6 rounded-2xl  ${
+      className={`flex w-full flex-col justify-end p-4 gap-y-6 rounded-2xl  ${
         bis
           ? "items-center bg-transparent ring ring-zinc-300"
           : "items-start bg-first"
       }`}
     >
       {icon}
-      <h6 className="font-bold text-md font-boldonse">{title}</h6>
+      <h6 className="font-bold text-sm font-boldonse">{title}</h6>
       <p className={`text-sm ${bis && "text-center"}`}>{text}</p>
     </div>
   );
