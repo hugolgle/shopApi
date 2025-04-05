@@ -40,7 +40,7 @@ function Footer() {
           </div>
         </div>
       </section>
-      
+
       <footer className="flex flex-col pt-20 px-4 bg-black">
         <div className="container mx-auto">
           <div className="flex justify-between">

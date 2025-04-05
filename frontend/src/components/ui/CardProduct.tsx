@@ -1,14 +1,21 @@
+import { Link } from "react-router-dom";
+
 function CardProduct({
   img,
   price,
   name,
+  id,
 }: {
   img: string;
   price: React.ReactNode;
   name: React.ReactNode;
+  id?: string;
 }) {
   return (
-    <div className="flex flex-col group gap-y-3 cursor-pointer">
+    <Link
+      to={`/product/${id}`}
+      className="flex flex-col group gap-y-3 cursor-pointer"
+    >
       <div className="flex justify-center rounded-2xl items-center bg-first w-fit lg:w-full">
         <img
           src={img}
@@ -27,7 +34,7 @@ function CardProduct({
         </div>
         <p className="text-sm">{price}</p>
       </div>
-    </div>
+    </Link>
   );
 }
 

@@ -6,8 +6,10 @@ import Footer from "../includes/Footer";
 function MainLayout() {
   return (
     <Fragment>
-      <Header />
-      <Outlet />
+      <main className="min-h-screen">
+        <Header />
+        <Outlet />
+      </main>
       <Footer />
     </Fragment>
   );
