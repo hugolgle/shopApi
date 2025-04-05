@@ -36,6 +36,8 @@ class LoginRoute extends Route {
       );
     }
 
+    console.log("password", password);
+
     const alreadyUser = await this.prisma.user.findUnique({
       where: { email: email },
     });
@@ -80,8 +82,8 @@ class LoginRoute extends Route {
       throw new ApiError(401, "User not found");
     }
 
-    const validHash = await bcrypt.compare(user.password, password);
-    if (validHash) {
+    const validHash = await bcrypt.compare(password, user.password);
+    if (!validHash) {
       throw new ApiError(401, "Invalid email or password");
     }
 

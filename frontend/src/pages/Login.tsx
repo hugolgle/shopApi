@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { login } from "@/services/Login.service";
 import { useMutation } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth.hook";
 
 const validationSchema = yup.object().shape({
   email: yup.string().email("Email invalide").required("Email requis"),
@@ -13,6 +13,7 @@ const validationSchema = yup.object().shape({
 
 function Login() {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const formik = useFormik({
     initialValues: {
@@ -30,12 +31,13 @@ function Login() {
     mutationFn: (values: { email: string; password: string }) =>
       login(values.email, values.password),
     onSuccess: (res) => {
-      console.log("Vous êtes connecté");
-      console.log(res.result);
-      navigate("/");
+      if (res) {
+        navigate("/");
+      }
     },
-    onError: () => {
+    onError: (err) => {
       console.log("Une erreur est survenue");
+      console.log(err);
     },
   });
 

@@ -1,5 +1,6 @@
 const express = require("express");
 const rateLimit = require("express-rate-limit");
+const cors = require("cors");
 require("dotenv").config();
 const app = express();
 const port = 8000;
@@ -30,7 +31,10 @@ app.use(
   express.urlencoded({
     extended: true,
   }),
-  limiter
+  limiter,
+  cors({
+    origin: "*",
+  })
 );
 
 app.use(express.json());
