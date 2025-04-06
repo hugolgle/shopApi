@@ -23,5 +23,6 @@ module.exports = {
     imagePath: true,
     reference: true,
     categoryId: true,
+    id: true,
   },
 };

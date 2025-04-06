@@ -1,11 +1,32 @@
-import bag from "@/assets/img/bag.png";
 import { Button } from "@/components/ui/button";
+import Loader from "@/components/ui/loader";
+import { productService } from "@/services/Product.service";
+import { formatCurrency } from "@/utils/utils";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 function Product() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const { id } = useParams<{ id?: string }>();
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["productsById", id ?? ""],
+    queryFn: async () => {
+      const response = await productService.getById(id ?? "");
+      return response?.data?.result;
+    },
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+    refetchOnMount: false,
+  });
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <section className="flex flex-col pt-10 px-4">
@@ -13,7 +34,7 @@ function Product() {
         <div className="flex flex-col gap-4">
           <div className="bg-zinc-100 rounded-2xl flex justify-center">
             <img
-              src={bag}
+              src={data?.imagePath}
               alt="product"
               className="aspect-square w-full max-w-xs sm:max-w-sm md:max-w-md object-cover"
             />
@@ -21,21 +42,21 @@ function Product() {
           <div className="grid grid-cols-3 gap-4">
             <div className="bg-zinc-100 rounded-2xl flex justify-center hover:ring ring-blue-500 transition cursor-pointer">
               <img
-                src={bag}
+                src={data?.imagePath}
                 alt="product"
                 className="aspect-square w-full max-w-[100px] object-cover"
               />
             </div>
             <div className="bg-zinc-100 rounded-2xl flex justify-center hover:ring ring-blue-500 transition cursor-pointer">
               <img
-                src={bag}
+                src={data?.imagePath}
                 alt="product"
                 className="aspect-square w-full max-w-[100px] object-cover"
               />
             </div>
             <div className="bg-zinc-100 rounded-2xl flex justify-center hover:ring ring-blue-500 transition cursor-pointer">
               <img
-                src={bag}
+                src={data?.imagePath}
                 alt="product"
                 className="aspect-square w-full max-w-[100px] object-cover"
               />
@@ -43,20 +64,21 @@ function Product() {
           </div>
         </div>
         <div className="flex flex-col gap-5 py-4">
-          <h1 className="text-2xl md:text-3xl font-boldonse">SAC À DOS LV</h1>
-          <p className="text-lg italic text-black font-black">1223,45 €</p>
+          <h1 className="text-2xl md:text-3xl font-boldonse">{data?.name}</h1>
+          <p className="text-lg italic text-black font-black">
+            {formatCurrency.format(Number(data?.price))}
+          </p>
           <p className="text-sm">
             <span>Par </span>
             <a href="#" className="underline italic">
-              Louis Vuitton
+              {data?.brand}
             </a>
           </p>
 
-          <p className="text-sm">#PL0001</p>
+          <p className="text-sm">#{data?.reference}</p>
 
           <p className="text-sm text-justify text-zinc-700">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem
-            nobis enim nam ab, similique natus at laboriosam officia hic modi?
+            {data?.description}
           </p>
           <div className="flex gap-2">
             <div className="flex items-center w-fit gap-2">
