@@ -4,14 +4,18 @@ import imgHome from "@/assets/img/imgHome.jpg";
 import bag from "@/assets/img/bag.png";
 import { Button } from "@/components/ui/button";
 import CardProduct from "@/components/ui/CardProduct";
+import { useEffect } from "react";
 
 function Home() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
-    <main className="container mx-auto">
+    <main className="container mx-auto px-4 md:px-0">
       <section className="flex flex-col lg:flex-row gap-4 lg:max-h-full xl:max-h-[587px] mb-30">
         <div className="flex flex-col justify-start items-center gap-4 w-full lg:w-1/2">
           <div className="flex flex-col justify-between rounded-2xl bg-first p-8 gap-4">
-            <h1 className="text-4xl/18 font-boldonse">
+            <h1 className="text-2xl/12 md:text-4xl/18 font-boldonse">
               PRÉPAREZ-VOUS POUR LES VOYAGES D'AFFAIRES DE FIN D'ANNÉE
             </h1>
             <p>
@@ -40,7 +44,7 @@ function Home() {
           <img
             src={imgHome}
             alt="Voyage"
-            className="rounded-2xl w-full h-full object-cover"
+            className="rounded-2xl w-full h-[200px] md:h-full object-cover"
           />
         </div>
       </section>

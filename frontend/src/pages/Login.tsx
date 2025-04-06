@@ -6,6 +6,7 @@ import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth.hook";
 import { Card, CardContent, CardHeader } from "@/components/ui/Card";
+import { useEffect } from "react";
 
 const validationSchema = yup.object().shape({
   email: yup.string().email("Email invalide").required("Email requis"),
@@ -13,6 +14,9 @@ const validationSchema = yup.object().shape({
 });
 
 function Login() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const navigate = useNavigate();
   const { login } = useAuth();
 
@@ -58,7 +62,7 @@ function Login() {
               <Input
                 id="email"
                 type="email"
-                className="border-none bg-background"
+                className="border-none bg-background placeholder:text-muted-foreground"
                 {...formik.getFieldProps("email")}
                 placeholder="Votre e-mail"
                 autoComplete="new-email"
@@ -74,7 +78,7 @@ function Login() {
               <Input
                 id="password"
                 type="password"
-                className="border-none bg-background"
+                className="border-none bg-background placeholder:text-muted-foreground"
                 {...formik.getFieldProps("password")}
                 placeholder="Votre mot de passe"
                 autoComplete="new-password"
