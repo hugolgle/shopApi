@@ -32,8 +32,8 @@ function Header() {
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
-                <Link to={"/boutique"}>
-                  <Button variant="ghost">Dernier produits</Button>
+                <Link to={"/store"}>
+                  <Button variant="ghost">Boutique</Button>
                 </Link>
               </NavigationMenuItem>
               <NavigationMenuItem>
