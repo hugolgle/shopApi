@@ -1,4 +1,10 @@
-import { useState, useEffect, useCallback } from "react";
+import React, {
+  createContext,
+  useState,
+  useEffect,
+  useCallback,
+  useContext,
+} from "react";
 import axios from "axios";
 
 interface UserProfile {
@@ -20,7 +26,17 @@ interface UserProfile {
   }>;
 }
 
-export const useAuth = () => {
+interface AuthContextType {
+  user: UserProfile | null;
+  login: (email: string, password: string) => Promise<void>;
+  logout: () => Promise<void>;
+  isAuthenticated: boolean;
+  loading: boolean;
+}
+
+const AuthContext = createContext<AuthContextType | null>(null);
+
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -28,7 +44,9 @@ export const useAuth = () => {
     try {
       const res = await axios.get(
         `${import.meta.env.VITE_BACKEND_URL}profile`,
-        { withCredentials: true }
+        {
+          withCredentials: true,
+        }
       );
       setUser(res.data.result);
     } catch (error) {
@@ -53,7 +71,6 @@ export const useAuth = () => {
       );
 
       await fetchProfile();
-      return true;
     },
     [fetchProfile]
   );
@@ -66,11 +83,20 @@ export const useAuth = () => {
 
   const isAuthenticated = !!user;
 
-  return {
-    user,
-    login,
-    logout,
-    isAuthenticated,
-    loading,
-  };
+  return (
+    <AuthContext.Provider
+      value={{ user, login, logout, isAuthenticated, loading }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+// Hook personnalisé pour utiliser le contexte
+export const useAuthContext = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuthContext must be used inside an AuthProvider");
+  }
+  return context;
 };

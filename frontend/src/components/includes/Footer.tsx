@@ -12,8 +12,8 @@ function Footer() {
         className="flex flex-col pt-20 h-[70vh] bg-no-repeat bg-fixed bg-center bg-cover"
         style={{ backgroundImage: `url(${bagFooter})` }}
       >
-        <div className="h-full">
-          <div className="flex items-end justify-between h-full w-full p-4">
+        <div className="container mx-auto h-full">
+          <div className="flex flex-col md:flex-row md:items-end justify-between h-full w-full p-4">
             <div className="flex flex-col justify-center gap-20 w-1/3 pb-10 md:flex-row">
               <div>
                 <h1 className="text-3xl font-boldonse text-white">80+</h1>
@@ -24,7 +24,7 @@ function Footer() {
                 <p className="text-white">Clients dans le monde</p>
               </div>
             </div>
-            <div className="flex flex-col items-center w-1/3 gap-2 pb-10">
+            <div className="flex flex-col lg:items-center lg:w-1/2 gap-2 pb-10">
               <p className="font-boldonse text-white">
                 ABONNEZ-VOUS À NOTRE NEWSLETTER
               </p>
@@ -32,7 +32,7 @@ function Footer() {
                 <Input
                   type="email"
                   placeholder="Entrez votre email"
-                  className="w-full"
+                  className="w-full focus:bg-white focus:text-black"
                 />
                 <Button variant="secondary">S'abonner</Button>
               </div>

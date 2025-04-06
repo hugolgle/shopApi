@@ -34,10 +34,9 @@ module.exports = (req, res, next) => {
         // Destructuration du tokens
         const decoded = jwtDecode.jwtDecode(token);
         const verify = jwt.verify(token, decoded.userId.toString());
-        console.log("Decoded token:", decoded);
         req.user = verify.userId;
 
-        if (authRequired === true && decoded.role > 2) {
+        if (authRequired === true && decoded.role < 2) {
           throw new ApiError(403, "User not authorized to access this route");
         }
 
@@ -51,7 +50,7 @@ module.exports = (req, res, next) => {
         return next();
       } catch (error) {
         console.error("Token verification failed:", error);
-        return next(new ApiError(401, "Invalid or expired token"));
+        return next(error);
       }
     } else {
       throw new ApiError(401, "Token not found");

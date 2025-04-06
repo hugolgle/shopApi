@@ -4,9 +4,9 @@ import { useMutation } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/hooks/useAuth.hook";
 import { Card, CardContent, CardHeader } from "@/components/ui/Card";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useAuthContext } from "@/context/AuthProvider";
 
 const validationSchema = yup.object().shape({
   email: yup.string().email("Email invalide").required("Email requis"),
@@ -18,7 +18,8 @@ function Login() {
     window.scrollTo(0, 0);
   }, []);
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login } = useAuthContext();
+  const [error, setError] = useState<string | null>(null);
 
   const formik = useFormik({
     initialValues: {
@@ -35,14 +36,17 @@ function Login() {
   const mutation = useMutation({
     mutationFn: (values: { email: string; password: string }) =>
       login(values.email, values.password),
-    onSuccess: (res) => {
-      if (res) {
-        navigate("/");
-      }
+    onSuccess: () => {
+      navigate("/");
     },
     onError: (err) => {
-      console.log("Une erreur est survenue");
-      console.log(err);
+      if (err.response && err.response.status === 401) {
+        setError("Identifiants ou mot de passe incorrects");
+      } else {
+        setError(
+          "Impossible de procédér à la connexion. Merci de réessayer ultérieurement."
+        );
+      }
     },
   });
 
@@ -53,6 +57,11 @@ function Login() {
           <h1 className="text-2xl font-bold font-boldonse">Connexion</h1>
         </CardHeader>
         <CardContent>
+          {error && (
+            <p className="text-left flex items-start w-full text-red-500">
+              {error}
+            </p>
+          )}
           <form
             onSubmit={formik.handleSubmit}
             className="flex flex-col gap-y-4 mt-4 w-lg"
