@@ -6,6 +6,7 @@ import DashboardLayout from "./components/layouts/DashboardLayout";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Product from "./pages/Product";
+import Store from "./pages/Store";
 
 function App() {
   const router = createBrowserRouter([
@@ -14,7 +15,7 @@ function App() {
       errorElement: <div>Not Found</div>,
       children: [
         { path: "/", element: <Home /> },
-        { path: "/boutique", element: <Home /> },
+        { path: "/store", element: <Store /> },
         { path: "/login", element: <Login /> },
         { path: "/product/:id", element: <Product /> },
       ],
