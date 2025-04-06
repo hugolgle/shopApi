@@ -1,5 +1,4 @@
 import CardProduct from "@/components/ui/CardProduct";
-import bag from "@/assets/img/bag.png";
 import {
   Select,
   SelectContent,
@@ -9,11 +8,31 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { productService } from "@/services/Product.service";
+import { Product } from "@/interface/product.interface";
+import Loader from "@/components/ui/loader";
 
 function Store() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["products"],
+    queryFn: async () => {
+      const response = await productService.getAll();
+      return response.data;
+    },
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+    refetchOnMount: false,
+  });
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <section className="flex flex-col pt-10 px-4 container mx-auto">
       <div className="flex flex-col items-center py-4 w-full gap-4">
@@ -52,81 +71,15 @@ function Store() {
 
           <div className="flex gap-10 justify-center items-center">
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-              <CardProduct
-                img={bag}
-                name="Sac Louis Vuitton"
-                price="1228.00 €"
-              />
-              <CardProduct
-                img={bag}
-                name="Sac Louis Vuitton"
-                price="1228.00 €"
-              />
-              <CardProduct
-                img={bag}
-                name="Sac Louis Vuitton"
-                price="1228.00 €"
-              />
-              <CardProduct
-                img={bag}
-                name="Sac Louis Vuitton"
-                price="1228.00 €"
-              />
-              <CardProduct
-                img={bag}
-                name="Sac Louis Vuitton"
-                price="1228.00 €"
-              />
-              <CardProduct
-                img={bag}
-                name="Sac Louis Vuitton"
-                price="1228.00 €"
-              />
-              <CardProduct
-                img={bag}
-                name="Sac Louis Vuitton"
-                price="1228.00 €"
-              />
-              <CardProduct
-                img={bag}
-                name="Sac Louis Vuitton"
-                price="1228.00 €"
-              />
-              <CardProduct
-                img={bag}
-                name="Sac Louis Vuitton"
-                price="1228.00 €"
-              />
-              <CardProduct
-                img={bag}
-                name="Sac Louis Vuitton"
-                price="1228.00 €"
-              />
-              <CardProduct
-                img={bag}
-                name="Sac Louis Vuitton"
-                price="1228.00 €"
-              />
-              <CardProduct
-                img={bag}
-                name="Sac Louis Vuitton"
-                price="1228.00 €"
-              />
-              <CardProduct
-                img={bag}
-                name="Sac Louis Vuitton"
-                price="1228.00 €"
-              />
-              <CardProduct
-                img={bag}
-                name="Sac Louis Vuitton"
-                price="1228.00 €"
-              />
-              <CardProduct
-                img={bag}
-                name="Sac Louis Vuitton"
-                price="1228.00 €"
-              />
+              {data?.result.map((product: Product) => (
+                <CardProduct
+                  key={product.id}
+                  img={product.imagePath}
+                  name={product.name}
+                  price={product.price}
+                  id={product.id}
+                />
+              ))}
             </div>
           </div>
         </div>

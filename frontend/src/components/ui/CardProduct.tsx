@@ -1,3 +1,5 @@
+import React from "react";
+import { formatCurrency } from "@/utils/utils";
 import { Link } from "react-router-dom";
 
 function CardProduct({
@@ -7,7 +9,7 @@ function CardProduct({
   id,
 }: {
   img: string;
-  price: React.ReactNode;
+  price: number;
   name: React.ReactNode;
   id?: string;
 }) {
@@ -16,11 +18,11 @@ function CardProduct({
       to={`/product/${id}`}
       className="flex flex-col group gap-y-3 cursor-pointer"
     >
-      <div className="flex justify-center rounded-2xl items-center bg-first w-fit lg:w-full">
+      <div className="flex justify-center w-72 rounded-2xl items-center bg-first lg:w-full">
         <img
           src={img}
           alt="product"
-          className="aspect-square w-full max-w-72 object-cover group-hover:scale-95 transition-transform duration-300"
+          className="aspect-square w-72 object-cover group-hover:scale-95 transition-transform duration-300"
         />
       </div>
       <div className="flex w-full flex-col gap-y-2 justify-end px-4">
@@ -32,7 +34,7 @@ function CardProduct({
             <div className="w-3 h-3 rounded-[3px] bg-red-500" />
           </div>
         </div>
-        <p className="text-sm">{price}</p>
+        <p className="text-sm">{formatCurrency.format(price)}</p>
       </div>
     </Link>
   );
