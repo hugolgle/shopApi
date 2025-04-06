@@ -1,8 +1,8 @@
+import Card from "@/components/ui/Cards";
 import { DollarSign, Truck } from "lucide-react";
 import imgHome from "@/assets/img/imgHome.jpg";
 import bag from "@/assets/img/bag.png";
 import { Button } from "@/components/ui/button";
-import Card from "@/components/ui/Card";
 import CardProduct from "@/components/ui/CardProduct";
 
 function Home() {

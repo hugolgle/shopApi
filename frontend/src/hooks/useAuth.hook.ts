@@ -1,78 +1,76 @@
 import { useState, useEffect, useCallback } from "react";
-import * as jwt from "jwt-decode";
 import axios from "axios";
 
-const TOKEN_KEY = "auth_token";
-const getTokenPayload = (token: string) => {
-  try {
-    const decoded = jwt.jwtDecode(token);
-    console.log(decoded);
-    return decoded;
-  } catch (error) {
-    console.error("Erreur de décodage du token", error);
-    return null;
-  }
-};
+interface UserProfile {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  address: string;
+  city: string;
+  role: {
+    id: number;
+    name: string;
+  };
+  commands: Array<{
+    id: number;
+    status: string;
+    createdAt: string;
+    updatedAt: string;
+  }>;
+}
 
 export const useAuth = () => {
-  const [token, setToken] = useState<string | null>(null);
-  const [isTokenExpiredFlag, setIsTokenExpiredFlag] = useState<boolean>(false);
+  const [user, setUser] = useState<UserProfile | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  const isTokenExpired = useCallback(() => {
-    if (token) {
-      const payload = getTokenPayload(token);
-      if (payload && payload.exp) {
-        const expirationDate = new Date(payload.exp * 1000);
-        return expirationDate < new Date();
-      }
-    }
-    return false;
-  }, [token]);
-
-  useEffect(() => {
-    const storedToken = sessionStorage.getItem(TOKEN_KEY);
-    if (storedToken) {
-      setToken(storedToken);
+  const fetchProfile = useCallback(async () => {
+    try {
+      const res = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}profile`,
+        { withCredentials: true }
+      );
+      setUser(res.data.result);
+    } catch (error) {
+      console.error("Error fetching profile:", error);
+      setUser(null);
+    } finally {
+      setLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    if (token && isTokenExpired()) {
-      setIsTokenExpiredFlag(true);
-      logout();
-    } else {
-      setIsTokenExpiredFlag(false);
-    }
-  }, [token, isTokenExpired]);
+    fetchProfile();
+  }, [fetchProfile]);
 
-  const login = useCallback(async (email: string, password: string) => {
-    const url = import.meta.env.VITE_BACKEND_URL + "login";
-    const response = await axios.post(url, { data: { email, password } });
-    const token = response.data.result;
+  const login = useCallback(
+    async (email: string, password: string) => {
+      const url = `${import.meta.env.VITE_BACKEND_URL}login`;
+      await axios.post(
+        url,
+        { data: { email, password } },
+        { withCredentials: true }
+      );
 
-    sessionStorage.setItem(TOKEN_KEY, token);
-    setToken(token);
+      await fetchProfile();
+      return true;
+    },
+    [fetchProfile]
+  );
 
-    return true;
+  const logout = useCallback(async () => {
+    const url = `${import.meta.env.VITE_BACKEND_URL}logout`;
+    await axios.post(url, {}, { withCredentials: true });
+    setUser(null);
   }, []);
 
-  const logout = () => {
-    sessionStorage.removeItem(TOKEN_KEY);
-    setToken(null);
-    setIsTokenExpiredFlag(false);
+  const isAuthenticated = !!user;
+
+  return {
+    user,
+    login,
+    logout,
+    isAuthenticated,
+    loading,
   };
-
-  const isAuthenticated = !!token && !isTokenExpiredFlag;
-
-  const data = useCallback(() => {
-    if (token) {
-      const payload = getTokenPayload(token);
-      if (payload) {
-        return payload;
-      }
-    }
-    return null;
-  }, [token]);
-
-  return { token, login, logout, isAuthenticated, data };
 };

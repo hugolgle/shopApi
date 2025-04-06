@@ -88,11 +88,24 @@ class LoginRoute extends Route {
     }
 
     const token = jwt.sign(
-      { user: user, userId: user.id },
+      { userId: user.id, role: user.roleId },
       user.id.toString(),
       { expiresIn: "24h" }
     );
-    res.status(200).json({ result: token });
+
+    res.cookie("auth_token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "Strict",
+      maxAge: 24 * 60 * 60 * 1000, // 1 jour
+    });
+
+    res.status(200).json({ result: "Login successfull" });
+  }
+
+  static async logout(req, res) {
+    res.clearCookie("auth_token");
+    res.status(200).json({ result: "Logout successfull" });
   }
 }
 
