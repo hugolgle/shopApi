@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Product from "./pages/Product";
 import Store from "./pages/Store";
+import Cart from "./pages/Cart";
 
 function App() {
   const router = createBrowserRouter([
@@ -17,6 +18,7 @@ function App() {
         { path: "/", element: <Home /> },
         { path: "/store", element: <Store /> },
         { path: "/login", element: <Login /> },
+        { path: "/cart", element: <Cart /> },
         { path: "/product/:id", element: <Product /> },
       ],
     },

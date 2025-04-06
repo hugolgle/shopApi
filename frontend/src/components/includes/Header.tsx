@@ -5,8 +5,7 @@ import {
   NavigationMenuItem,
 } from "../ui/navigation-menu";
 import { Button } from "../ui/button";
-import { Search, ShoppingCart, CircleUser, Menu, X } from "lucide-react";
-import { useAuth } from "@/hooks/useAuth.hook";
+import { Search, CircleUser, Menu, X } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -17,9 +16,11 @@ import {
 } from "../ui/dropdown-menu";
 import { Avatar, AvatarImage, AvatarFallback } from "../ui/avatar";
 import { useEffect, useState } from "react";
+import Cart from "@/components/ui/cart";
+import { useAuthContext } from "@/context/AuthProvider";
 
 function Header() {
-  const { isAuthenticated, user, logout } = useAuth();
+  const { isAuthenticated, user, logout } = useAuthContext();
   const [openMenu, setOpenMenu] = useState<boolean>(false);
   const redirect = useNavigate();
   const isAdmin = user?.role.name === "ADMIN";
@@ -37,6 +38,8 @@ function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  console.log("header user:", user);
+
   return (
     <header className="fixed w-full h-[70px] flex items-center transition-colors duration-300 z-50">
       <div className="container mx-auto">
@@ -49,9 +52,7 @@ function Header() {
             <Button variant="ghost">
               <Search />
             </Button>
-            <Button variant="ghost">
-              <ShoppingCart />
-            </Button>
+            <Cart />
             <Button variant="ghost" onClick={() => setOpenMenu(true)}>
               <Menu />
             </Button>
@@ -155,9 +156,7 @@ function Header() {
                 </Button>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Button variant="ghost">
-                  <ShoppingCart />
-                </Button>
+                <Cart />
               </NavigationMenuItem>
               {!isAuthenticated ? (
                 <NavigationMenuItem>
