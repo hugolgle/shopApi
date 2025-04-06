@@ -8,8 +8,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
+import { useEffect } from "react";
 
 function Store() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <section className="flex flex-col pt-10 px-4 container mx-auto">
       <div className="flex flex-col items-center py-4 w-full gap-4">

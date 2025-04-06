@@ -60,12 +60,12 @@ function Footer() {
             </div>
           </div>
           <hr className="bg-zinc-500 h-[1.5px] mx-auto w-4/5 my-10" />
-          <div className="flex justify-between">
-            <div className="flex flex-col gap-y-2 w-1/2">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="flex flex-col items-center gap-y-2 md:w-1/2">
               <img
                 src={city}
                 alt="city"
-                className="rounded-2xl w-1/2 mb-2 object-cover"
+                className="rounded-2xl md:w-1/2 mb-2 object-cover"
               />
               <div className="flex gap-2 items-center">
                 <MapPin color="white" size={20} />
@@ -80,7 +80,7 @@ function Footer() {
                 <p className="text-white text-sm">vannes@gmail.com</p>
               </div>
             </div>
-            <div className="flex justify-center gap-x-20 w-1/2 text-white text-sm">
+            <div className="flex justify-center gap-x-20 md:w-1/2 text-white text-sm">
               <div className="flex flex-col gap-y-2">
                 <p>MENU RAPIDE</p>
                 <p className="text-zinc-500">Derniers produits</p>
