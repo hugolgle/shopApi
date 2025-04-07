@@ -4,27 +4,14 @@ import {
   DropdownMenuTrigger,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
-import { useEffect, useState } from "react";
 import { ShoppingCart } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "./button";
-
-interface CartItem {
-  reference: string;
-  quantity: number;
-}
+import { useCart } from "@/context/CartProvider";
 
 function Cart() {
-  const [cart, setCart] = useState<CartItem[]>([]);
-
-  useEffect(() => {
-    const storedCart = sessionStorage.getItem("cart");
-    if (storedCart) {
-      setCart(JSON.parse(storedCart));
-    }
-  }, []);
+  const { cart, increaseQuantity, decreaseQuantity } = useCart();
 
   return (
     <DropdownMenu>
@@ -38,12 +25,28 @@ function Cart() {
         <DropdownMenuSeparator />
         {cart.length > 0 ? (
           cart.map((item) => (
-            <DropdownMenuItem key={item.reference}>
-              <div className="flex gap-2">
-                <span>{item.reference}</span>
-                <span>x{item.quantity}</span>
+            <DropdownMenuLabel key={item.reference} className="w-full">
+              <div className="flex items-center justify-between gap-2 w-full">
+                <p>{item.reference}</p>
+                <div className="flex items-center gap-2">
+                  <Button
+                    size={"sm"}
+                    variant={"ghost"}
+                    onClick={() => decreaseQuantity(item)}
+                  >
+                    -
+                  </Button>
+                  <p>x{item.quantity}</p>
+                  <Button
+                    size={"sm"}
+                    variant={"ghost"}
+                    onClick={() => increaseQuantity(item)}
+                  >
+                    +
+                  </Button>
+                </div>
               </div>
-            </DropdownMenuItem>
+            </DropdownMenuLabel>
           ))
         ) : (
           <DropdownMenuLabel>Votre panier est vide.</DropdownMenuLabel>
