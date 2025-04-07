@@ -29,9 +29,15 @@ function Cart() {
                 >
                   <div>
                     <h2 className="text-lg font-semibold">{item.reference}</h2>
-                    <p>Quantité : {item.quantity}</p>
                   </div>
-                  <p>{item.price} €</p>
+                  <div className="flex flex-col">
+                    <p>Quantité :</p>
+                    <p>{item.quantity}</p>
+                  </div>
+                  <div className="flex flex-col">
+                    <p>Total :</p>
+                    <p>{item.price} €</p>
+                  </div>
                 </div>
               ))
             ) : (

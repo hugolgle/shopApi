@@ -1,15 +1,17 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8000/product";
-
 class ProductService {
   async getAll() {
-    const response = await axios.get(API_URL);
+    const response = await axios.get(
+      import.meta.env.VITE_BACKEND_URL + `product`
+    );
     return response;
   }
 
   async getById(id: string) {
-    const response = await axios.get(API_URL + `/${id}`);
+    const response = await axios.get(
+      import.meta.env.VITE_BACKEND_URL + `product/${id}`
+    );
     return response;
   }
 }
