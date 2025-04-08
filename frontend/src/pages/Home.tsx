@@ -142,24 +142,12 @@ function Home() {
               <CardProduct
                 img={bag}
                 name="Sac Louis Vuitton"
-                price="1228.00 €"
+                price={1228.0}
                 id="1"
               />
-              <CardProduct
-                img={bag}
-                name="Sac Louis Vuitton"
-                price="1228.00 €"
-              />
-              <CardProduct
-                img={bag}
-                name="Sac Louis Vuitton"
-                price="1228.00 €"
-              />
-              <CardProduct
-                img={bag}
-                name="Sac Louis Vuitton"
-                price="1228.00 €"
-              />
+              <CardProduct img={bag} name="Sac Louis Vuitton" price={1228.0} />
+              <CardProduct img={bag} name="Sac Louis Vuitton" price={1228.0} />
+              <CardProduct img={bag} name="Sac Louis Vuitton" price={1228.0} />
             </div>
           </div>
         </div>
@@ -184,46 +172,14 @@ function Home() {
           </div>
           <div className="flex gap-10 justify-center items-center">
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
-              <CardProduct
-                img={bag}
-                name="Sac Louis Vuitton"
-                price="1228.00 €"
-              />
-              <CardProduct
-                img={bag}
-                name="Sac Louis Vuitton"
-                price="1228.00 €"
-              />
-              <CardProduct
-                img={bag}
-                name="Sac Louis Vuitton"
-                price="1228.00 €"
-              />
-              <CardProduct
-                img={bag}
-                name="Sac Louis Vuitton"
-                price="1228.00 €"
-              />
-              <CardProduct
-                img={bag}
-                name="Sac Louis Vuitton"
-                price="1228.00 €"
-              />
-              <CardProduct
-                img={bag}
-                name="Sac Louis Vuitton"
-                price="1228.00 €"
-              />
-              <CardProduct
-                img={bag}
-                name="Sac Louis Vuitton"
-                price="1228.00 €"
-              />
-              <CardProduct
-                img={bag}
-                name="Sac Louis Vuitton"
-                price="1228.00 €"
-              />
+              <CardProduct img={bag} name="Sac Louis Vuitton" price={1228.0} />
+              <CardProduct img={bag} name="Sac Louis Vuitton" price={1228.0} />
+              <CardProduct img={bag} name="Sac Louis Vuitton" price={1228.0} />
+              <CardProduct img={bag} name="Sac Louis Vuitton" price={1228.0} />
+              <CardProduct img={bag} name="Sac Louis Vuitton" price={1228.0} />
+              <CardProduct img={bag} name="Sac Louis Vuitton" price={1228.0} />
+              <CardProduct img={bag} name="Sac Louis Vuitton" price={1228.0} />
+              <CardProduct img={bag} name="Sac Louis Vuitton" price={1228.0} />
             </div>
           </div>
         </div>

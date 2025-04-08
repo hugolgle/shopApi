@@ -15,7 +15,6 @@ export interface UserProfile {
     createdAt: string;
     updatedAt: string;
   }>;
-}
 
 export interface UserProfileForm {
   firstname: string;

@@ -18,12 +18,14 @@ import { Avatar, AvatarImage, AvatarFallback } from "../ui/avatar";
 import { useEffect, useState } from "react";
 import Cart from "@/components/ui/cart";
 import { useAuthContext } from "@/context/AuthProvider";
+import { ROUTES } from "../Routes";
+import { ROLES } from "../StaticData";
 
 function Header() {
   const { isAuthenticated, user, logout } = useAuthContext();
   const [openMenu, setOpenMenu] = useState<boolean>(false);
   const redirect = useNavigate();
-  const isAdmin = user?.role.name === "ADMIN";
+  const isAdmin = user?.role.name === ROLES.ADMIN;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,7 +44,7 @@ function Header() {
     <header className="fixed w-full h-[70px] flex items-center transition-colors duration-300 z-50">
       <div className="container mx-auto">
         <div className="flex items-center justify-between px-4">
-          <Link to={"/"} className="text-2xl font-bold font-boldonse">
+          <Link to={ROUTES.HOME} className="text-2xl font-bold font-boldonse">
             Randoo
           </Link>
           {/* MENU RESPONSIVE  */}
@@ -69,21 +71,21 @@ function Header() {
               <X />
             </Button>
             <Link
-              to={"/store"}
+              to={ROUTES.STORE}
               onClick={() => setOpenMenu(false)}
               className="text-lg"
             >
               Boutique
             </Link>
             <Link
-              to={"/a-propos"}
+              to={"#"}
               onClick={() => setOpenMenu(false)}
               className="text-lg"
             >
               Collections
             </Link>
             <Link
-              to={"/a-propos"}
+              to={"#"}
               onClick={() => setOpenMenu(false)}
               className="text-lg"
             >
@@ -91,7 +93,7 @@ function Header() {
             </Link>
             {isAdmin && (
               <Link
-                to={"/dashboard"}
+                to={ROUTES.ADMIN.HOME}
                 onClick={() => setOpenMenu(false)}
                 className="text-lg"
               >
@@ -116,7 +118,7 @@ function Header() {
               onClick={() => {
                 setOpenMenu(false);
                 logout();
-                redirect("/");
+                redirect(ROUTES.HOME);
               }}
               className="text-lg"
             >
@@ -129,17 +131,17 @@ function Header() {
           <NavigationMenu className="hidden md:flex">
             <NavigationMenuList>
               <NavigationMenuItem>
-                <Link to={"/store"}>
+                <Link to={ROUTES.STORE}>
                   <Button variant="ghost">Boutique</Button>
                 </Link>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link to={"/a-propos"}>
+                <Link to={"#"}>
                   <Button variant="ghost">Collections</Button>
                 </Link>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <Link to={"/a-propos"}>
+                <Link to={"#"}>
                   <Button variant="ghost">Notre histoire</Button>
                 </Link>
               </NavigationMenuItem>
@@ -158,7 +160,7 @@ function Header() {
               </NavigationMenuItem>
               {!isAuthenticated ? (
                 <NavigationMenuItem>
-                  <Link to={"/login"}>
+                  <Link to={ROUTES.LOGIN}>
                     <Button variant="ghost">
                       <CircleUser />
                     </Button>
@@ -187,7 +189,7 @@ function Header() {
 
                       {isAdmin && (
                         <DropdownMenuItem asChild>
-                          <Link to={"/dashboard"}>Dashboard</Link>
+                          <Link to={ROUTES.ADMIN.HOME}>Dashboard</Link>
                         </DropdownMenuItem>
                       )}
                       <DropdownMenuLabel>Mon Compte</DropdownMenuLabel>

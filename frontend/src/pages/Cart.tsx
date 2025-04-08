@@ -1,3 +1,4 @@
+import { ROUTES } from "@/components/Routes";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
@@ -45,7 +46,7 @@ function Cart() {
                 <p>
                   Votre panier est vide.{" "}
                   <Link
-                    to={"/store"}
+                    to={ROUTES.STORE}
                     className="underline underline-offset-4 text-blue-500"
                   >
                     Retourner à la boutique
