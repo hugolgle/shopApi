@@ -178,24 +178,25 @@ function Cart() {
             </div>
           </div>
           <div className="w-full">
-            {isAuthenticated ? (
-              <Button
-                className="w-full"
-                onClick={proceedPayment}
-                disabled={isLoading}
-              >
-                {isLoading ? <Loader /> : "Passer la commande"}
-              </Button>
-            ) : (
-              <Fragment>
-                <p>
-                  Vous n'êtes pas connecter ?{" "}
-                  <Button variant={"link"} onClick={() => navigate("/login")}>
-                    Se connecter
-                  </Button>
-                </p>
-              </Fragment>
-            )}
+            {cartItem.length > 0 &&
+              (isAuthenticated ? (
+                <Button
+                  className="w-full"
+                  onClick={proceedPayment}
+                  disabled={isLoading}
+                >
+                  {isLoading ? <Loader /> : "Passer la commande"}
+                </Button>
+              ) : (
+                <Fragment>
+                  <p>
+                    Vous n'êtes pas connecté ?{" "}
+                    <Button variant="link" onClick={() => navigate("/login")}>
+                      Se connecter
+                    </Button>
+                  </p>
+                </Fragment>
+              ))}
           </div>
         </div>
       </div>

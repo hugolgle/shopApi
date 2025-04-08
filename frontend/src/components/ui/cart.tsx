@@ -55,6 +55,14 @@ function Cart() {
           <DropdownMenuLabel>Votre panier est vide.</DropdownMenuLabel>
         )}
         <DropdownMenuLabel className="flex items-center justify-end gap-2">
+          <p className="w-full">
+            Total TTC :{" "}
+            {cart.reduce(
+              (acc, next) => (acc += next.unit_price * next.quantity),
+              0
+            )}{" "}
+            €
+          </p>
           <Link to="/cart" className="w-full">
             <Button className="w-full">Voir le panier</Button>
           </Link>

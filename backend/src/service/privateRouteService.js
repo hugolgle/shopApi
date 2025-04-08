@@ -37,6 +37,12 @@ const privateRoutes = {
     PUT: true,
     DELETE: true,
   },
+  commandsDetails: {
+    GET: false,
+    POST: false,
+    PUT: true,
+    DELETE: true,
+  },
   role: {
     GET: true,
     POST: true,
