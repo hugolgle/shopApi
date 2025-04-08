@@ -4,7 +4,9 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm ci --only=production
+RUN npm install
+
+RUN npm install -g nodemon
 
 COPY . .
 
@@ -12,4 +14,4 @@ RUN npx prisma generate
 
 EXPOSE 8000
 
-CMD ["npm", "start"]
+CMD ["nodemon", "--watch", ".", "index.js"]

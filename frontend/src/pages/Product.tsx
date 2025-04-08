@@ -47,6 +47,7 @@ function Product() {
     const item: CartItem = {
       reference: data.reference,
       quantity: 1,
+      unit_price: data.price,
     };
     addToCart(item);
     setQuantity(1);

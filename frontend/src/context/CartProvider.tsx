@@ -69,6 +69,11 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     updateCart(updatedCart);
   };
 
+  // Réinitialisation du panier
+  const resetCart = () => {
+    updateCart([]);
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -77,6 +82,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         removeFromCart,
         increaseQuantity,
         decreaseQuantity,
+        resetCart,
       }}
     >
       {children}

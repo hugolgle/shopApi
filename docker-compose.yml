@@ -33,7 +33,7 @@ services:
 
   adminer:
     container_name: shopapi-adminer
-    image: adminer:latest 
+    image: adminer:latest
     ports:
       - "8080:8080"
     restart: always
