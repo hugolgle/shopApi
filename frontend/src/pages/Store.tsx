@@ -29,14 +29,14 @@ function Store() {
     refetchOnMount: false,
   });
 
-  if (isLoading) {
+  if (isLoading && !data) {
     return <Loader />;
   }
 
   return (
     <section className="flex flex-col pt-10 px-4 container mx-auto">
       <div className="flex flex-col items-center py-4 w-full gap-4">
-        <div className="flex flex-col gap-2 w-full lg:px-20">
+        <div className="flex flex-col gap-2 w-full">
           <h1 className="text-xl font-black font-boldonse">NOS PRODUITS</h1>
         </div>
 

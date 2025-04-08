@@ -46,6 +46,7 @@ module.exports = {
   commands: yup.object({
     userId: yup.number().required("User ID is required"),
     commandStateId: yup.number().required("Command state ID is required"),
+    stripeSession: yup.string().required("stripeSession is required"),
   }),
 
   commandsDetails: yup.object({

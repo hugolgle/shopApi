@@ -45,7 +45,6 @@ class CheckoutRoute extends Route {
       throw new ApiError(400, "No valid products found for checkout");
     }
 
-    // Appel du service Stripe pour créer une session de paiement
     const stripe = await StripeService.createCheckoutSessions(checkoutProducts);
 
     res.status(200).json({ result: stripe });
@@ -59,7 +58,6 @@ class CheckoutRoute extends Route {
     if (!session) {
       throw new ApiError(400, "Some data are currently missing or invalid");
     }
-    console.log(session);
 
     const stripeSession = await StripeService.retrieveCheckoutSession(session);
 

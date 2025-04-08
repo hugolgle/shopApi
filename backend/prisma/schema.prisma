@@ -52,6 +52,7 @@ model Commands {
   id             String           @id @default(uuid()) @unique
   userId         Int
   commandStateId Int
+  stripeSession  String          @unique
   createdAt      DateTime         @default(now())
   status         CommandsState    @relation(fields: [commandStateId], references: [id])
   user           User             @relation(fields: [userId], references: [id])
