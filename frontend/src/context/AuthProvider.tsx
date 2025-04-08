@@ -6,6 +6,13 @@ import React, {
   useContext,
 } from "react";
 import axios from "axios";
+
+import {
+  UserProfile,
+  UserProfileForm,
+} from "@/interface/userProfile.interface";
+import { AuthContextType } from "@/interface/authContextType.interface";
+import { toast } from "sonner";
 import { UserProfile } from "@/interface/userProfile.interface";
 import { AuthContextType } from "@/interface/authContextType.interface";
 
@@ -46,6 +53,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       );
 
       await fetchProfile();
+      toast.success("Connexion réussie !");
+    },
+    [fetchProfile]
+  );
+
+  const register = useCallback(
+    async (data: UserProfileForm) => {
+      const url = `${import.meta.env.VITE_BACKEND_URL}user`;
+      await axios.post(url, { data });
+
+      await fetchProfile();
     },
     [fetchProfile]
   );
@@ -54,13 +72,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const url = `${import.meta.env.VITE_BACKEND_URL}logout`;
     await axios.post(url, {}, { withCredentials: true });
     setUser(null);
+    toast.success("Déconnexion réussie !");
   }, []);
 
   const isAuthenticated = !!user;
 
   return (
     <AuthContext.Provider
-      value={{ user, login, logout, isAuthenticated, loading }}
+      value={{ user, login, logout, isAuthenticated, loading, register }}
     >
       {children}
     </AuthContext.Provider>
