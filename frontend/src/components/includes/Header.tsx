@@ -38,8 +38,6 @@ function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  console.log("header user:", user);
-
   return (
     <header className="fixed w-full h-[70px] flex items-center transition-colors duration-300 z-50">
       <div className="container mx-auto">

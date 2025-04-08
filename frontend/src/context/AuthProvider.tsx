@@ -6,33 +6,12 @@ import React, {
   useContext,
 } from "react";
 import axios from "axios";
-
-interface UserProfile {
-  id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  address: string;
-  city: string;
-  role: {
-    id: number;
-    name: string;
-  };
-  commands: Array<{
-    id: number;
-    status: string;
-    createdAt: string;
-    updatedAt: string;
-  }>;
-}
-
-interface AuthContextType {
-  user: UserProfile | null;
-  login: (email: string, password: string) => Promise<void>;
-  logout: () => Promise<void>;
-  isAuthenticated: boolean;
-  loading: boolean;
-}
+import {
+  UserProfile,
+  UserProfileForm,
+} from "@/interface/userProfile.interface";
+import { AuthContextType } from "@/interface/authContextType.interface";
+import { toast } from "sonner";
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
@@ -71,6 +50,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       );
 
       await fetchProfile();
+      toast.success("Connexion réussie !");
+    },
+    [fetchProfile]
+  );
+
+  const register = useCallback(
+    async (data: UserProfileForm) => {
+      const url = `${import.meta.env.VITE_BACKEND_URL}user`;
+      await axios.post(url, { data });
+
+      await fetchProfile();
     },
     [fetchProfile]
   );
@@ -79,13 +69,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const url = `${import.meta.env.VITE_BACKEND_URL}logout`;
     await axios.post(url, {}, { withCredentials: true });
     setUser(null);
+    toast.success("Déconnexion réussie !");
   }, []);
 
   const isAuthenticated = !!user;
 
   return (
     <AuthContext.Provider
-      value={{ user, login, logout, isAuthenticated, loading }}
+      value={{ user, login, logout, isAuthenticated, loading, register }}
     >
       {children}
     </AuthContext.Provider>

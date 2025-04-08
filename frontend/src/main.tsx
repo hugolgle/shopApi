@@ -4,6 +4,8 @@ import "./index.css";
 import App from "./App.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider } from "@/context/AuthProvider.tsx";
+import { CartProvider } from "./context/CartProvider.tsx";
+import { Toaster } from "./components/ui/sonner.tsx";
 
 const queryClient = new QueryClient();
 
@@ -11,7 +13,10 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <App />
+        <CartProvider>
+          <App />
+          <Toaster />
+        </CartProvider>
       </AuthProvider>
     </QueryClientProvider>
   </StrictMode>

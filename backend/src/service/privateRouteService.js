@@ -15,7 +15,6 @@ const privateRoutes = {
     DELETE: false,
   },
   product: {
-    GET: false,
     POST: true,
     PUT: true,
     DELETE: true,

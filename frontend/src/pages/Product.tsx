@@ -1,12 +1,17 @@
 import { Button } from "@/components/ui/button";
 import Loader from "@/components/ui/loader";
+import { useCart } from "@/context/CartProvider";
+import { CartItem } from "@/interface/cartItem.interface";
 import { productService } from "@/services/Product.service";
 import { formatCurrency } from "@/utils/utils";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 function Product() {
+  const { cart, addToCart, increaseQuantity, decreaseQuantity } = useCart();
+  const [quantity, setQuantity] = useState(0);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -24,9 +29,48 @@ function Product() {
     refetchOnMount: false,
   });
 
+  useEffect(() => {
+    if (!data) return;
+
+    const item = cart.find((item) => item.reference === data.reference);
+    if (item) {
+      setQuantity(item.quantity);
+    } else {
+      setQuantity(0);
+    }
+  }, [cart, data]);
+
   if (isLoading) {
     return <Loader />;
   }
+  const handleAddToCart = () => {
+    const item: CartItem = {
+      reference: data.reference,
+      quantity: 1,
+    };
+    addToCart(item);
+    setQuantity(1);
+  };
+
+  const handleIncreaseItem = () => {
+    const item: CartItem = cart.find(
+      (item) => item.reference === data.reference
+    );
+    if (item) {
+      increaseQuantity(item);
+    } else {
+      handleAddToCart();
+    }
+  };
+
+  const handleDecreaseItem = () => {
+    const item: CartItem = cart.find(
+      (item) => item.reference === data.reference
+    );
+    if (item) {
+      decreaseQuantity(item);
+    }
+  };
 
   return (
     <section className="flex flex-col pt-10 px-4">
@@ -82,15 +126,31 @@ function Product() {
           </p>
           <div className="flex gap-2">
             <div className="flex items-center w-fit gap-2">
-              <Button variant="secondary" className="w-1/3">
+              <Button
+                variant="secondary"
+                className="w-1/3"
+                onClick={handleDecreaseItem}
+              >
                 -
               </Button>
-              <p className="w-1/3 text-center">1</p>
-              <Button variant="secondary" className="w-1/3">
+              <p className="w-1/3 text-center">{quantity}</p>
+              <Button
+                variant="secondary"
+                className="w-1/3"
+                onClick={handleIncreaseItem}
+              >
                 +
               </Button>
             </div>
-            <Button className="w-fit px-6 py-3">Ajouter au panier</Button>
+            <Button
+              className="w-fit px-6 py-3"
+              onClick={handleAddToCart}
+              disabled={cart.find((item) => item.reference === data.reference)}
+            >
+              {cart.find((item) => item.reference === data.reference)
+                ? "Déjà au panier"
+                : "Ajouter au panier"}
+            </Button>
           </div>
         </div>
       </div>
