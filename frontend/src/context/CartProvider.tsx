@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { CartItem } from "@/interface/cartItem.interface";
 
-const CartContext = createContext<CartItem | null>(null);
+const CartContext = createContext<any>(null);
 
 export const useCart = () => useContext(CartContext);
 

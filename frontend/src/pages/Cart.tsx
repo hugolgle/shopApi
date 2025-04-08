@@ -1,6 +1,7 @@
+import { ROUTES } from "@/components/Routes";
 import { useState, useEffect, Fragment } from "react";
-import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/CartProvider";
 import { CartItem } from "@/interface/cartItem.interface";
 import { Trash } from "lucide-react";
@@ -106,7 +107,7 @@ function Cart() {
                 <p>
                   Votre panier est vide.{" "}
                   <Link
-                    to={"/store"}
+                    to={ROUTES.STORE}
                     className="underline underline-offset-4 text-blue-500"
                   >
                     Retourner à la boutique

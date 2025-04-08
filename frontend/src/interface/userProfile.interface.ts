@@ -15,4 +15,12 @@ export interface UserProfile {
     createdAt: string;
     updatedAt: string;
   }>;
+
+export interface UserProfileForm {
+  firstname: string;
+  lastname: string;
+  address: string;
+  city: string;
+  email: string;
+  password: string;
 }

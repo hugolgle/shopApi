@@ -1,6 +1,7 @@
 import React from "react";
 import { formatCurrency } from "@/utils/utils";
 import { Link } from "react-router-dom";
+import { ROUTES } from "../Routes";
 
 function CardProduct({
   img,
@@ -15,7 +16,7 @@ function CardProduct({
 }) {
   return (
     <Link
-      to={`/product/${id}`}
+      to={ROUTES.PRODUCT_ID.replace(":id", id || "")}
       className="flex flex-col group gap-y-3 cursor-pointer"
     >
       <div className="flex justify-center w-72 rounded-2xl items-center bg-first lg:w-full">
