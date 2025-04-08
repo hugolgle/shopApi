@@ -45,6 +45,9 @@ function Cart() {
                     +
                   </Button>
                 </div>
+                <div>
+                  <p>{(item.quantity * item.unit_price).toFixed(2)} €</p>
+                </div>
               </div>
             </DropdownMenuLabel>
           ))

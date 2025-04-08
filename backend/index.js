@@ -76,6 +76,13 @@ app.post(
     await checkout.triggerCheckout(req, res);
   })
 );
+app.post(
+  "/checkout/session",
+  auth,
+  asyncHandler(async (req, res) => {
+    await checkout.retrieveCheckoutSession(req, res);
+  })
+);
 
 /**
  * Routes sécurisées renvoyant vers une route partagé

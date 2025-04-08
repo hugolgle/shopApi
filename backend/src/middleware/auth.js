@@ -8,8 +8,8 @@ const privateRoutes = require("../service/privateRouteService");
  */
 module.exports = (req, res, next) => {
   const model = req.params.model;
-  const path = req.path.replace(/\//g, ""); // Supprimer les slashes
-  const method = req.method.toUpperCase(); // Récupérer la méthode en majuscule
+  const path = req.path.replace(/\//g, ""); 
+  const method = req.method.toUpperCase();
 
   // Vérification si la route appartient à privateRoutes
   const requiresAuth =

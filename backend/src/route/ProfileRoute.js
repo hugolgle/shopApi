@@ -16,6 +16,7 @@ class ProfileRoute extends Route {
     const user = await this.prisma.user.findUnique({
       where: { id: userId },
       select: {
+        id: true,
         firstName: true,
         lastName: true,
         email: true,

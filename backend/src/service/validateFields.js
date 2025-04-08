@@ -44,10 +44,15 @@ module.exports = {
   }),
 
   commands: yup.object({
-    reference: yup.string().required("Command reference is required"),
     userId: yup.number().required("User ID is required"),
     commandStateId: yup.number().required("Command state ID is required"),
-    products: yup.string().required("Products are required"), // Supposons que les produits sont envoyés sous forme d'object JSON
+    stripeSession: yup.string().required("stripeSession is required"),
+  }),
+
+  commandsDetails: yup.object({
+    commandId: yup.string().required("Command Id is required"),
+    productId: yup.string().required("Product Id is required"),
+    quantity: yup.number().required("quantity is required"),
   }),
 
   commandsState: yup.object({

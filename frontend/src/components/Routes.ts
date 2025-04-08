@@ -11,4 +11,8 @@ export const ROUTES = {
     USERS: "/dashboard/users",
     PRODUCTS: "/dashboard/products",
   },
+  PAYMENT: {
+    SUCCESS: "/payment/:sessionId/success",
+    CANCEL: "/payment/:sessionId/cancel",
+  },
 };

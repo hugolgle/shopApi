@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { CartItem } from "@/interface/cartItem.interface";
 
-const CartContext = createContext<CartItem | null>(null);
+const CartContext = createContext<any>(null);
 
 export const useCart = () => useContext(CartContext);
 
@@ -69,6 +69,11 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     updateCart(updatedCart);
   };
 
+  // Réinitialisation du panier
+  const resetCart = () => {
+    updateCart([]);
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -77,6 +82,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         removeFromCart,
         increaseQuantity,
         decreaseQuantity,
+        resetCart,
       }}
     >
       {children}
