@@ -11,9 +11,7 @@ import {
   UserProfile,
   UserProfileForm,
 } from "@/interface/userProfile.interface";
-import { AuthContextType } from "@/interface/authContextType.interface";
 import { toast } from "sonner";
-import { UserProfile } from "@/interface/userProfile.interface";
 import { AuthContextType } from "@/interface/authContextType.interface";
 
 const AuthContext = createContext<AuthContextType | null>(null);
