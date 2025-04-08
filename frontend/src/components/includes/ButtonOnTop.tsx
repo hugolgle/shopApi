@@ -25,7 +25,7 @@ function ButtonOnTop() {
     <Button
       ref={buttonRef}
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      className="fixed bottom-0 right-0 m-5 opacity-0 transition-opacity duration-300"
+      className="fixed bottom-0 w-8 h-8 right-0 m-5 opacity-0 transition-opacity duration-300"
     >
       <ChevronUp />
     </Button>

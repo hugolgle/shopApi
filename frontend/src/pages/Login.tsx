@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader } from "@/components/ui/Card";
 import { useEffect, useState } from "react";
 import { useAuthContext } from "@/context/AuthProvider";
+import { AxiosError, HttpStatusCode } from "axios";
 
 const validationSchema = yup.object().shape({
   email: yup.string().email("Email invalide").required("Email requis"),
@@ -39,8 +40,8 @@ function Login() {
     onSuccess: () => {
       navigate("/");
     },
-    onError: (err) => {
-      if (err.response && err.response.status === 401) {
+    onError: (err: AxiosError) => {
+      if (err.response && err.response.status === HttpStatusCode.Unauthorized) {
         setError("Identifiants ou mot de passe incorrects");
       } else {
         setError(
