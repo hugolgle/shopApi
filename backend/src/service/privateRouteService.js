@@ -26,8 +26,8 @@ const privateRoutes = {
     DELETE: true,
   },
   commands: {
-    GET: true,
-    POST: true,
+    GET: false,
+    POST: false,
     PUT: true,
     DELETE: true,
   },
