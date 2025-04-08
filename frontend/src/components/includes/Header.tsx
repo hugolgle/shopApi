@@ -108,7 +108,7 @@ function Header() {
               Mon compte
             </Link>
             <Link
-              to={"#"}
+              to={ROUTES.DASHBOARD_CUSTOMER.COMMANDS}
               onClick={() => setOpenMenu(false)}
               className="text-lg"
             >
@@ -193,7 +193,11 @@ function Header() {
                         </DropdownMenuItem>
                       )}
                       <DropdownMenuLabel>Mon Compte</DropdownMenuLabel>
-                      <DropdownMenuItem>Mes commandes</DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <Link to={ROUTES.DASHBOARD_CUSTOMER.COMMANDS}>
+                          Mes commandes
+                        </Link>
+                      </DropdownMenuItem>
                       <DropdownMenuItem
                         onClick={logout}
                         className="text-red-500 hover:text-red-400"

@@ -1,15 +1,42 @@
 import Card from "@/components/ui/Cards";
-import { DollarSign, Truck } from "lucide-react";
+import { DollarSign, Truck, X } from "lucide-react";
 import imgHome from "@/assets/img/imgHome.jpg";
 import bag from "@/assets/img/bag.png";
 import { Button } from "@/components/ui/button";
 import CardProduct from "@/components/ui/CardProduct";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { motion, useInView } from "framer-motion";
 
 function Home() {
+  const bagRef = useRef(null);
+  const isInView = useInView(bagRef, {
+    once: true,
+    margin: "0px 0px -100px 0px",
+  });
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const cardVariant = {
+    hidden: (i: number) => ({
+      opacity: 0,
+      scale: 0.8,
+      y: 50,
+      x: i % 4 < 2 ? 200 : -200,
+    }),
+    visible: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      x: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+      },
+    },
+  };
+
   return (
     <main className="container mx-auto px-4 md:px-0">
       <section className="flex flex-col lg:flex-row gap-4 lg:max-h-full xl:max-h-[587px] mb-30">
@@ -61,39 +88,66 @@ function Home() {
               durabilité et un confort pour tous vos voyages à venir.
             </p>
           </div>
+
           <div className="flex flex-col gap-4 justify-center items-center md:flex-row">
             <div className="flex flex-col gap-4 w-full">
-              <Card
-                title="DESIGN SPACIEUX"
-                text="Transportez vos essentiels et plus avec un espace organisé suffisant."
-                icon={<Truck />}
-                bis
-              />
-              <Card
-                title="RÉSISTANT AUX INTEMPÉRIES"
-                text="Matériaux durables et fermetures éclair résistantes aux intempéries."
-                icon={<DollarSign />}
-                bis
-              />
+              {[0, 1].map((i) => (
+                <motion.div
+                  key={i}
+                  custom={i}
+                  variants={cardVariant}
+                  initial="hidden"
+                  animate={isInView ? "visible" : "hidden"}
+                >
+                  <Card
+                    title={
+                      i === 0 ? "DESIGN SPACIEUX" : "RÉSISTANT AUX INTEMPÉRIES"
+                    }
+                    text={
+                      i === 0
+                        ? "Transportez vos essentiels et plus avec un espace organisé suffisant."
+                        : "Matériaux durables et fermetures éclair résistantes aux intempéries."
+                    }
+                    icon={i === 0 ? <Truck /> : <DollarSign />}
+                    bis
+                  />
+                </motion.div>
+              ))}
             </div>
-            <img
+
+            <motion.img
+              ref={bagRef}
               src={bag}
               alt="sac"
               className="w-1/3 object-cover hidden md:block"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={isInView ? { opacity: 1, scale: 1 } : {}}
+              transition={{ duration: 0.8 }}
             />
+
             <div className="flex flex-col gap-4 w-full">
-              <Card
-                title="CONFORTABLE"
-                text="Bretelles et dos rembourrés pour un transport confortable."
-                icon={<Truck />}
-                bis
-              />
-              <Card
-                title="COMPATIBLE AVEC LA TECHNOLOGIE"
-                text="Compartiment dédié pour ordinateur portable et fonctionnalités conviviales pour la technologie."
-                icon={<DollarSign />}
-                bis
-              />
+              {[2, 3].map((i) => (
+                <motion.div
+                  key={i}
+                  custom={i}
+                  variants={cardVariant}
+                  initial="hidden"
+                  animate={isInView ? "visible" : "hidden"}
+                >
+                  <Card
+                    title={
+                      i === 2 ? "CONFORTABLE" : "COMPATIBLE AVEC LA TECHNOLOGIE"
+                    }
+                    text={
+                      i === 2
+                        ? "Bretelles et dos rembourrés pour un transport confortable."
+                        : "Compartiment dédié pour ordinateur portable et fonctionnalités conviviales pour la technologie."
+                    }
+                    icon={i === 2 ? <Truck /> : <DollarSign />}
+                    bis
+                  />
+                </motion.div>
+              ))}
             </div>
           </div>
         </div>

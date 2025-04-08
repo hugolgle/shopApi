@@ -5,11 +5,14 @@ export const ROUTES = {
   STORE: "/store",
   CART: "/cart",
   PRODUCT_ID: "/product/:id",
-  ADMIN: {
-    HOME: "/dashboard",
+  DASHBOARD_CUSTOMER: {
     COMMANDS: "/dashboard/commands",
-    USERS: "/dashboard/users",
-    PRODUCTS: "/dashboard/products",
+  },
+  ADMIN: {
+    HOME: "/admin/dashboard",
+    COMMANDS: "/admin/dashboard/commands",
+    USERS: "/admin/dashboard/users",
+    PRODUCTS: "/admin/dashboard/products",
   },
   PAYMENT: {
     SUCCESS: "/payment/:sessionId/success",
