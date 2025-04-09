@@ -34,6 +34,7 @@ class CheckoutRoute extends Route {
         checkoutProducts.push({
           id: searchProduct.id,
           name: searchProduct.name,
+          reference: searchProduct.reference,
           price: searchProduct.price,
           quantity: elem.quantity,
         });
@@ -44,10 +45,23 @@ class CheckoutRoute extends Route {
       throw new ApiError(400, "No valid products found for checkout");
     }
 
-    // Appel du service Stripe pour créer une session de paiement
     const stripe = await StripeService.createCheckoutSessions(checkoutProducts);
 
     res.status(200).json({ result: stripe });
+  }
+
+  static async retrieveCheckoutSession(req, res) {
+    const {
+      data: { session },
+    } = req.body;
+
+    if (!session) {
+      throw new ApiError(400, "Some data are currently missing or invalid");
+    }
+
+    const stripeSession = await StripeService.retrieveCheckoutSession(session);
+
+    res.status(200).json({ result: stripeSession });
   }
 }
 

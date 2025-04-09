@@ -32,7 +32,7 @@ class Route {
 
     const fields = excludeFields[model] || null;
     const table = await this.prisma[model].findUnique({
-      where: { id: parseInt(id) },
+      where: { id: isNaN(id) ? id : parseInt(id) },
       select: fields || undefined,
     });
 

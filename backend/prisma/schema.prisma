@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./db.sqlite"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -28,16 +28,17 @@ model Role {
 }
 
 model Product {
-  id          Int      @id @default(autoincrement())
+  id          String             @id @default(uuid())
   name        String
   description String
   price       Float
   brand       String
-  reference   String   @unique
+  reference   String          @unique
   imagePath   String
   categoryId  Int
-  createdAt   DateTime @default(now())
-  category    Category @relation(fields: [categoryId], references: [id])
+  createdAt   DateTime        @default(now())
+  category    Category        @relation(fields: [categoryId], references: [id])
+  details     CommandsDetails[]
 }
 
 model Category {
@@ -48,14 +49,23 @@ model Category {
 }
 
 model Commands {
-  id             Int           @id @default(autoincrement())
-  reference      String        @unique @default(uuid())
+  id             String           @id @default(uuid()) @unique
   userId         Int
-  products       String
   commandStateId Int
-  createdAt      DateTime      @default(now())
-  status         CommandsState @relation(fields: [commandStateId], references: [id])
-  user           User          @relation(fields: [userId], references: [id])
+  stripeSession  String          @unique
+  createdAt      DateTime         @default(now())
+  status         CommandsState    @relation(fields: [commandStateId], references: [id])
+  user           User             @relation(fields: [userId], references: [id])
+  details        CommandsDetails[]
+}
+
+model CommandsDetails {
+  id         String   @id @default(uuid())
+  commandId  String
+  productId  String
+  quantity   Int
+  command    Commands @relation(fields: [commandId], references: [id])
+  product    Product  @relation(fields: [productId], references: [id])
 }
 
 model CommandsState {

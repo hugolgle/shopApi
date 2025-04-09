@@ -4,9 +4,51 @@ services:
     build: ./backend/.
     ports:
       - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    environment:
+      - DATABASE_URL=postgresql://user:password@db:5432/shopapi_db
+    depends_on:
+      - db
 
   frontend:
     container_name: shopapi-frontend
     build: ./frontend/.
     ports:
       - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+  db:
+    container_name: shopapi-db
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=shopapi_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  adminer:
+    container_name: shopapi-adminer
+    image: adminer:latest
+    ports:
+      - "8080:8080"
+    restart: always
+    depends_on:
+      - db
+
+  kuma:
+    container_name: shopapi-monitoring
+    image: louislam/uptime-kuma:latest
+    ports:
+      - "9000:3001"
+    volumes:
+      - uptime-kuma:/app/data
+    restart: always
+
+volumes:
+  uptime-kuma:
+  postgres_data:

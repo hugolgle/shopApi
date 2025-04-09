@@ -36,6 +36,8 @@ class LoginRoute extends Route {
       );
     }
 
+    console.log("password", password);
+
     const alreadyUser = await this.prisma.user.findUnique({
       where: { email: email },
     });
@@ -80,17 +82,30 @@ class LoginRoute extends Route {
       throw new ApiError(401, "User not found");
     }
 
-    const validHash = await bcrypt.compare(user.password, password);
-    if (validHash) {
+    const validHash = await bcrypt.compare(password, user.password);
+    if (!validHash) {
       throw new ApiError(401, "Invalid email or password");
     }
 
     const token = jwt.sign(
-      { user: user, userId: user.id },
+      { userId: user.id, role: user.roleId },
       user.id.toString(),
       { expiresIn: "24h" }
     );
-    res.status(200).json({ result: token });
+
+    res.cookie("auth_token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "Strict",
+      maxAge: 24 * 60 * 60 * 1000, // 1 jour
+    });
+
+    res.status(200).json({ result: "Login successfull" });
+  }
+
+  static async logout(req, res) {
+    res.clearCookie("auth_token");
+    res.status(200).json({ result: "Logout successfull" });
   }
 }
 

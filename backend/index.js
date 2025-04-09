@@ -1,5 +1,6 @@
 const express = require("express");
 const rateLimit = require("express-rate-limit");
+const cors = require("cors");
 require("dotenv").config();
 const app = express();
 const port = 8000;
@@ -8,11 +9,13 @@ const port = 8000;
 const route = require("./src/route/Route");
 const login = require("./src/route/LoginRoute");
 const checkout = require("./src/route/CheckoutRoute");
+const profile = require("./src/route/ProfileRoute");
 
 // Middleware
 const auth = require("./src/middleware/auth");
 const error = require("./src/middleware/error");
 const asyncHandler = require("./src/middleware/asyncHandler");
+const cookieParser = require("cookie-parser");
 
 /**
  * Limiter Request
@@ -26,12 +29,17 @@ const limiter = rateLimit({
   legacyHeaders: false,
 });
 
+app.use(cookieParser());
+
 app.use(
-  express.urlencoded({
-    extended: true,
-  }),
-  limiter
+  cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
+  })
 );
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
 
@@ -43,9 +51,22 @@ app.post(
   })
 );
 app.post(
+  "/logout",
+  asyncHandler(async (req, res) => {
+    await login.logout(req, res);
+  })
+);
+app.post(
   "/user",
   asyncHandler(async (req, res) => {
     await login.createUser(req, res);
+  })
+);
+app.get(
+  "/profile",
+  auth,
+  asyncHandler(async (req, res) => {
+    await profile.getProfile(req, res);
   })
 );
 app.post(
@@ -53,6 +74,13 @@ app.post(
   auth,
   asyncHandler(async (req, res) => {
     await checkout.triggerCheckout(req, res);
+  })
+);
+app.post(
+  "/checkout/session",
+  auth,
+  asyncHandler(async (req, res) => {
+    await checkout.retrieveCheckoutSession(req, res);
   })
 );
 
