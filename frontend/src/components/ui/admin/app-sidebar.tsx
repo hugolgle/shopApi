@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Sidebar,
   SidebarContent,
@@ -14,6 +12,7 @@ import { Link } from "react-router-dom";
 import { NavUser } from "./nav-user";
 import { useAuthContext } from "@/context/AuthProvider";
 import { UserProfile } from "@/interface/userProfile.interface";
+import { ROUTES } from "@/components/Routes";
 
 export function AppSidebar() {
   const { user, logout } = useAuthContext();
@@ -26,12 +25,12 @@ export function AppSidebar() {
               asChild
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
-              <a href="/dashboard">
+              <Link to={ROUTES.ADMIN.HOME}>
                 <p className="text-base font-boldonse">
                   Randoo{" "}
                   <span className="font-boldonse text-[10px]">Admin</span>{" "}
                 </p>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

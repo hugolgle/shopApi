@@ -1,5 +1,3 @@
-"use client";
-
 import {
   BellIcon,
   CreditCardIcon,
@@ -25,6 +23,9 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { UserProfile } from "@/interface/userProfile.interface";
+import { Link } from "react-router-dom";
+import { ROUTES } from "@/components/Routes";
+import { CornerUpLeft } from "lucide-react";
 
 export function NavUser({
   user,
@@ -102,6 +103,13 @@ export function NavUser({
                 Notifications
               </DropdownMenuItem>
             </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem asChild>
+              <Link to={ROUTES.HOME}>
+                <CornerUpLeft />
+                Retour au site
+              </Link>
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={logout}>
               <LogOutIcon />
