@@ -16,6 +16,8 @@ import Users from "./pages/admin/Users";
 import Products from "./pages/admin/Products";
 import ProtectedRoute from "./ProtectedRoutes";
 import { ROUTES } from "./components/Routes";
+import Register from "./pages/Register";
+import CustomerCommands from "./pages/CustomerCommands";
 
 function App() {
   const router = createBrowserRouter([
@@ -26,10 +28,15 @@ function App() {
         { path: ROUTES.HOME, element: <Home /> },
         { path: ROUTES.STORE, element: <Store /> },
         { path: ROUTES.LOGIN, element: <Login /> },
+        { path: ROUTES.REGISTER, element: <Register /> },
         { path: ROUTES.CART, element: <Cart /> },
         { path: ROUTES.PRODUCT_ID, element: <Product /> },
         { path: ROUTES.PAYMENT.SUCCESS, element: <Succes /> },
         { path: ROUTES.PAYMENT.CANCEL, element: <Cancel /> },
+        {
+          path: ROUTES.DASHBOARD_CUSTOMER.COMMANDS,
+          element: <CustomerCommands />,
+        },
       ],
     },
     {

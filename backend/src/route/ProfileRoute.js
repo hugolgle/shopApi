@@ -31,8 +31,20 @@ class ProfileRoute extends Route {
         commands: {
           select: {
             id: true,
-            status: true,
+            status: {
+              select: {
+                id: false,
+                name: true,
+              },
+            },
             createdAt: true,
+            details: {
+              select: {
+                id: false,
+                product: true,
+                quantity: true,
+              },
+            },
           },
         },
       },

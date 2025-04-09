@@ -4,15 +4,69 @@ import imgHome from "@/assets/img/imgHome.jpg";
 import bag from "@/assets/img/bag.png";
 import { Button } from "@/components/ui/button";
 import CardProduct from "@/components/ui/CardProduct";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import { Link } from "react-router-dom";
+import { ROUTES } from "@/components/Routes";
 
 function Home() {
+  const bagRef = useRef(null);
+  const collectionRef = useRef(null);
+  const accessoiryRef = useRef(null);
+  const isInView = useInView(bagRef, {
+    once: true,
+    margin: "0px 0px -100px 0px",
+  });
+
+  const collectionIsView = useInView(collectionRef, {
+    once: true,
+    margin: "0px 0px -100px 0px",
+  });
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const cardVariant = {
+    hidden: (i: number) => ({
+      opacity: 0,
+      scale: 0.8,
+      y: 50,
+      x: i % 4 < 2 ? 200 : -200,
+    }),
+    visible: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      x: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+      },
+    },
+  };
+
+  const imageVariant = {
+    hidden: { x: -500, opacity: 0 },
+    visible: {
+      x: 0,
+      opacity: 1,
+      transition: { duration: 0.8, ease: "easeOut" },
+    },
+  };
+
+  const productsVariant = {
+    hidden: { x: 500, opacity: 0 },
+    visible: {
+      x: 0,
+      opacity: 1,
+      transition: { duration: 0.8, ease: "easeOut" },
+    },
+  };
+
   return (
     <main className="container mx-auto px-4 md:px-0">
-      <section className="flex flex-col lg:flex-row gap-4 lg:max-h-full xl:max-h-[587px] mb-30">
+      <section className="flex flex-col lg:flex-row gap-10 lg:max-h-full xl:max-h-[587px] mb-30">
         <div className="flex flex-col justify-start items-center gap-4 w-full lg:w-1/2">
           <div className="flex flex-col justify-between rounded-2xl bg-first p-8 gap-4">
             <h1 className="text-2xl/12 md:text-4xl/18 font-boldonse">
@@ -23,9 +77,11 @@ function Home() {
               simplicité. Maximisez la productivité, simplifiez les plans et
               profitez de voyages sans stress.
             </p>
-            <Button variant="outline" className="w-fit p-5">
-              Acheter maintenant
-            </Button>
+            <Link to={ROUTES.STORE}>
+              <Button variant="outline" className="w-fit p-5">
+                Acheter maintenant
+              </Button>
+            </Link>
           </div>
           <div className="flex gap-4">
             <Card
@@ -61,44 +117,72 @@ function Home() {
               durabilité et un confort pour tous vos voyages à venir.
             </p>
           </div>
+
           <div className="flex flex-col gap-4 justify-center items-center md:flex-row">
             <div className="flex flex-col gap-4 w-full">
-              <Card
-                title="DESIGN SPACIEUX"
-                text="Transportez vos essentiels et plus avec un espace organisé suffisant."
-                icon={<Truck />}
-                bis
-              />
-              <Card
-                title="RÉSISTANT AUX INTEMPÉRIES"
-                text="Matériaux durables et fermetures éclair résistantes aux intempéries."
-                icon={<DollarSign />}
-                bis
-              />
+              {[0, 1].map((i) => (
+                <motion.div
+                  key={i}
+                  custom={i}
+                  variants={cardVariant}
+                  initial="hidden"
+                  animate={isInView ? "visible" : "hidden"}
+                >
+                  <Card
+                    title={
+                      i === 0 ? "DESIGN SPACIEUX" : "RÉSISTANT AUX INTEMPÉRIES"
+                    }
+                    text={
+                      i === 0
+                        ? "Transportez vos essentiels et plus avec un espace organisé suffisant."
+                        : "Matériaux durables et fermetures éclair résistantes aux intempéries."
+                    }
+                    icon={i === 0 ? <Truck /> : <DollarSign />}
+                    bis
+                  />
+                </motion.div>
+              ))}
             </div>
-            <img
+
+            <motion.img
+              ref={bagRef}
               src={bag}
               alt="sac"
               className="w-1/3 object-cover hidden md:block"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={isInView ? { opacity: 1, scale: 1 } : {}}
+              transition={{ duration: 0.8 }}
             />
+
             <div className="flex flex-col gap-4 w-full">
-              <Card
-                title="CONFORTABLE"
-                text="Bretelles et dos rembourrés pour un transport confortable."
-                icon={<Truck />}
-                bis
-              />
-              <Card
-                title="COMPATIBLE AVEC LA TECHNOLOGIE"
-                text="Compartiment dédié pour ordinateur portable et fonctionnalités conviviales pour la technologie."
-                icon={<DollarSign />}
-                bis
-              />
+              {[2, 3].map((i) => (
+                <motion.div
+                  key={i}
+                  custom={i}
+                  variants={cardVariant}
+                  initial="hidden"
+                  animate={isInView ? "visible" : "hidden"}
+                >
+                  <Card
+                    title={
+                      i === 2 ? "CONFORTABLE" : "COMPATIBLE AVEC LA TECHNOLOGIE"
+                    }
+                    text={
+                      i === 2
+                        ? "Bretelles et dos rembourrés pour un transport confortable."
+                        : "Compartiment dédié pour ordinateur portable et fonctionnalités conviviales pour la technologie."
+                    }
+                    icon={i === 2 ? <Truck /> : <DollarSign />}
+                    bis
+                  />
+                </motion.div>
+              ))}
             </div>
           </div>
         </div>
       </section>
-      <section className="flex flex-col pt-10">
+
+      <section className="flex flex-col pt-20">
         <div className="flex flex-col items-center py-4 w-full gap-4">
           <div className="flex flex-col gap-2 w-full justify-between items-end lg:flex-row">
             <div className="flex flex-col gap-y-2 lg:w-3/5">
@@ -114,12 +198,20 @@ function Home() {
                 exceptionnelle pour chaque aventure.
               </p>
             </div>
-            <Button variant="outline" className="w-fit p-5">
-              Voir plus
-            </Button>
+            <Link to={ROUTES.STORE}>
+              <Button variant="outline" className="w-fit p-5">
+                Voir plus
+              </Button>
+            </Link>
           </div>
-          <div className="flex flex-col gap-4 justify-center items-center md:flex-row md:justify-between">
-            <div className="relative hidden justify-center w-full md:block md:w-1/2 lg:flex">
+          <div className="flex flex-col gap-10 justify-center items-center md:flex-row md:justify-between">
+            <motion.div
+              ref={collectionRef}
+              className="relative hidden justify-center w-full md:block md:w-1/2 lg:flex"
+              variants={imageVariant}
+              initial="hidden"
+              animate={collectionIsView ? "visible" : "hidden"}
+            >
               <img
                 src={imgHome}
                 alt="voyage"
@@ -137,8 +229,14 @@ function Home() {
                   Explorer
                 </Button>
               </div>
-            </div>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:w-1/2">
+            </motion.div>
+
+            <motion.div
+              className="grid grid-cols-1 gap-4 md:grid-cols-2 md:w-1/2"
+              variants={productsVariant}
+              initial="hidden"
+              animate={collectionIsView ? "visible" : "hidden"}
+            >
               <CardProduct
                 img={bag}
                 name="Sac Louis Vuitton"
@@ -148,11 +246,12 @@ function Home() {
               <CardProduct img={bag} name="Sac Louis Vuitton" price={1228.0} />
               <CardProduct img={bag} name="Sac Louis Vuitton" price={1228.0} />
               <CardProduct img={bag} name="Sac Louis Vuitton" price={1228.0} />
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
-      <section className="flex flex-col pt-10 mb-20">
+
+      <section className="flex flex-col pt-20 mb-40">
         <div className="flex flex-col items-center py-4 w-full gap-4">
           <div className="flex flex-col gap-2 w-full justify-between items-end lg:flex-row">
             <div className="flex flex-col gap-y-2">
@@ -166,9 +265,11 @@ function Home() {
                 pour votre prochaine aventure.
               </p>
             </div>
-            <Button variant="outline" className="w-fit p-5">
-              Voir plus
-            </Button>
+            <Link to={ROUTES.STORE}>
+              <Button variant="outline" className="w-fit p-5">
+                Voir plus
+              </Button>
+            </Link>
           </div>
           <div className="flex gap-10 justify-center items-center">
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">

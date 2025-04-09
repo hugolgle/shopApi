@@ -1,3 +1,4 @@
+import { ROUTES } from "@/components/Routes";
 import { Button } from "@/components/ui/button";
 import Loader from "@/components/ui/loader";
 import { useCart } from "@/context/CartProvider";
@@ -7,6 +8,8 @@ import { formatCurrency } from "@/utils/utils";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { ArrowLeft, Plus, Minus } from "lucide-react";
 
 function Product() {
   const { cart, addToCart, increaseQuantity, decreaseQuantity } = useCart();
@@ -74,8 +77,15 @@ function Product() {
   };
 
   return (
-    <section className="flex flex-col pt-10 px-4">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full max-w-7xl mx-auto py-4">
+    <section className="flex flex-col pt-10 container mx-auto">
+      <Link
+        to={ROUTES.STORE}
+        className=" flex items-center gap-1 hover:text-blue-500 w-fit"
+      >
+        <ArrowLeft />
+        Retourner à la boutique
+      </Link>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 w-full py-4">
         <div className="flex flex-col gap-4">
           <div className="bg-zinc-100 rounded-2xl flex justify-center">
             <img
@@ -132,7 +142,7 @@ function Product() {
                 className="w-1/3"
                 onClick={handleDecreaseItem}
               >
-                -
+                <Minus />
               </Button>
               <p className="w-1/3 text-center">{quantity}</p>
               <Button
@@ -140,7 +150,7 @@ function Product() {
                 className="w-1/3"
                 onClick={handleIncreaseItem}
               >
-                +
+                <Plus />
               </Button>
             </div>
             <Button

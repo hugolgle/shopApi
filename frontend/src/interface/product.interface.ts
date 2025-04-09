@@ -9,3 +9,13 @@ export interface Product {
   categoryId: number;
   createdAt: string;
 }
+
+export interface ProductForm {
+  name: string;
+  description: string;
+  price: number;
+  brand: string;
+  reference: string;
+  imagePath: string;
+  categoryId: string;
+}

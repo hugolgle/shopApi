@@ -4,7 +4,9 @@ import { ROUTES } from "./components/Routes";
 import { ROLES } from "./components/StaticData";
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { user } = useAuthContext();
+  const { user, loading } = useAuthContext();
+
+  if (loading) return null;
 
   if (user?.role.name !== ROLES.ADMIN) {
     return <Navigate to={ROUTES.LOGIN} replace />;
