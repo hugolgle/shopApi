@@ -1,16 +1,17 @@
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useMutation } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader } from "@/components/ui/Card";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAuthContext } from "@/context/AuthProvider";
 import { AxiosError, HttpStatusCode } from "axios";
 import { ROUTES } from "@/components/Routes";
 import { toast } from "sonner";
-        
+import { motion } from "framer-motion";
+import Loader from "@/components/ui/loader";
+
 const validationSchema = yup.object().shape({
   email: yup.string().email("Email invalide").required("Email requis"),
   password: yup.string().required("Mot de passe requis"),
@@ -22,6 +23,7 @@ function Login() {
   }, []);
   const navigate = useNavigate();
   const { login } = useAuthContext();
+  const [isLoading, setIsLoading] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -31,7 +33,12 @@ function Login() {
     validationSchema,
     validateOnMount: true,
     onSubmit: (values) => {
-      mutation.mutate(values);
+      const newValues = {
+        ...values,
+        categoryId: parseFloat(values.categoryId),
+      };
+      mutation.mutate(newValues);
+      setIsLoading(true);
     },
   });
 
@@ -39,12 +46,19 @@ function Login() {
     mutationFn: (values: { email: string; password: string }) =>
       login(values.email, values.password),
     onSuccess: () => {
-      navigate("/");
       toast.success("Connexion réussie");
+
+      setTimeout(() => {
+        setIsLoading(false);
+        navigate(ROUTES.HOME);
+      }, 1000);
     },
     onError: (err: AxiosError) => {
       if (err.response && err.response.status === HttpStatusCode.Unauthorized) {
-        toast.error("Identifiants ou mot de passe incorrects");
+        setTimeout(() => {
+          setIsLoading(false);
+          toast.error("Identifiants ou mot de passe incorrects");
+        }, 1000);
       } else {
         toast.error(
           "Impossible de procédér à la connexion. Merci de réessayer ultérieurement."
@@ -54,10 +68,10 @@ function Login() {
   });
 
   return (
-    <section className="flex flex-col px-4 w-full items-center h-[60vh]">
-      <Card>
+    <section className="flex flex-col px-4 w-full items-center justify-center">
+      <Card className="mt-20">
         <CardHeader>
-          <h1 className="text-2xl font-bold font-boldonse">Connexion</h1>
+          <h1 className="text-2xl font-bold text-center">Connexion</h1>
         </CardHeader>
         <CardContent>
           <form
@@ -69,7 +83,7 @@ function Login() {
               <Input
                 id="email"
                 type="email"
-                className="border-none bg-background placeholder:text-muted-foreground"
+                className="bg-background placeholder:text-muted-foreground"
                 {...formik.getFieldProps("email")}
                 placeholder="Votre e-mail"
                 autoComplete="new-email"
@@ -85,7 +99,7 @@ function Login() {
               <Input
                 id="password"
                 type="password"
-                className="border-none bg-background placeholder:text-muted-foreground"
+                className=" bg-background placeholder:text-muted-foreground"
                 {...formik.getFieldProps("password")}
                 placeholder="Votre mot de passe"
                 autoComplete="new-password"
@@ -96,7 +110,34 @@ function Login() {
                 </p>
               )}
             </div>
-            <Button type="submit">Se connecter</Button>
+            <motion.div>
+              <motion.button
+                type="submit"
+                initial={{ opacity: 1 }}
+                animate={{
+                  opacity: isLoading ? 0.5 : 1,
+                  scale: isLoading ? 1.1 : 1,
+                  transition: { duration: 0.3 },
+                }}
+                disabled={isLoading}
+                className="w-full p-2 bg-foreground hover:bg-accent-foreground text-sm text-white rounded-md cursor-pointer"
+              >
+                {isLoading ? (
+                  <motion.div
+                    key="loading"
+                    initial={{ x: -20 }}
+                    animate={{ x: 0 }}
+                    exit={{ x: 20 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    <Loader />
+                    Chargement...
+                  </motion.div>
+                ) : (
+                  "Se connecter"
+                )}
+              </motion.button>
+            </motion.div>
           </form>
           <div className="flex items-center gap-2 my-4">
             <hr className="flex-grow border-border h-[1px]" />

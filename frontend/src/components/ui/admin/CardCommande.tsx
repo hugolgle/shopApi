@@ -1,5 +1,4 @@
 import { formatCurrency } from "@/utils/utils";
-import React from "react";
 
 function CardCommande({
   img,
