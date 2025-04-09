@@ -1,4 +1,4 @@
-const { commands } = require("./validateFields");
+const { commands, category } = require("./validateFields");
 
 /**
  *  Service permettant d'exclure les données sensibles, non désirées lors du renvoyer des données
@@ -34,5 +34,10 @@ module.exports = {
     commandStateId: true,
     status: true,
     details: true,
+  },
+  category: {
+    id: true,
+    name: true,
+    createdAt: false,
   },
 };

@@ -43,7 +43,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
 
-// Routes sécurisées renvoyant vers une route personnalisé
+app.use("/uploads", express.static("uploads"));
+
 app.post(
   "/login",
   asyncHandler(async (req, res) => {

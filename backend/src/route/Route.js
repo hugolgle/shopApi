@@ -129,6 +129,16 @@ class Route {
       throw new ApiError(404, "Entry not found or already deleted");
     }
   }
+
+  static uploadFile(req, res) {
+    const { file } = req;
+
+    if (!file) {
+      throw new ApiError(400, "File not found");
+    }
+
+    res.status(200).json({ file: file.path });
+  }
 }
 
 module.exports = Route;
