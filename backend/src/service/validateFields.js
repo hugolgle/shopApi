@@ -24,7 +24,6 @@ module.exports = {
       .required("Password is required"),
     address: yup.string().optional(),
     city: yup.string().optional(),
-    roleId: yup.number().optional("Role ID is required"),
   }),
 
   product: yup.object({

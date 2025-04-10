@@ -1,5 +1,3 @@
-const { commands } = require("./validateFields");
-
 /**
  *  Service permettant d'exclure les données sensibles, non désirées lors du renvoyer des données
  *
@@ -12,9 +10,15 @@ module.exports = {
     firstName: true,
     lastName: true,
     email: true,
+    password: false,
     address: true,
     city: true,
-    role: true,
+    role: {
+      select: {
+        id: false,
+        name: true,
+      },
+    },
     commands: true,
     createdAt: true,
   },
@@ -34,5 +38,10 @@ module.exports = {
     commandStateId: true,
     status: true,
     details: true,
+  },
+  category: {
+    id: true,
+    name: true,
+    createdAt: false,
   },
 };

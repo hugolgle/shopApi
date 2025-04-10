@@ -21,6 +21,8 @@ class CheckoutRoute extends Route {
     }
 
     const checkoutProducts = [];
+
+    // On recrée un tableau de produits souhaités afin d'avoir les prix à jour
     for (const elem of products) {
       if (elem.quantity <= 0) {
         continue;

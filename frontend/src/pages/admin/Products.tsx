@@ -15,7 +15,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { formatCurrency } from "@/utils/utils";
-import FormProduct from "@/components/ui/admin/formProduct";
+import FormProduct from "@/components/ui/admin/FormProduct";
 
 export const columns: ColumnDef<Product>[] = [
   {
@@ -81,7 +81,7 @@ export const columns: ColumnDef<Product>[] = [
 ];
 
 function Products() {
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
       const response = await productService.getAll();
@@ -107,7 +107,7 @@ function Products() {
             <Button className="btn btn-primary">Ajouter un produit</Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
-            <FormProduct />
+            <FormProduct refetch={refetch} />
           </DialogContent>
         </Dialog>
       </div>

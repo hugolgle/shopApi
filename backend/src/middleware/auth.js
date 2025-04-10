@@ -8,7 +8,7 @@ const privateRoutes = require("../service/privateRouteService");
  */
 module.exports = (req, res, next) => {
   const model = req.params.model;
-  const path = req.path.replace(/\//g, ""); 
+  const path = req.path.replace(/\//g, "");
   const method = req.method.toUpperCase();
 
   // Vérification si la route appartient à privateRoutes
@@ -22,10 +22,6 @@ module.exports = (req, res, next) => {
     const authRequired =
       (privateRoutes[model] && privateRoutes[model][method]) ||
       (privateRoutes[path] && privateRoutes[path][method]);
-
-    // if (!authRequired) {
-    //   return next();
-    // }
 
     const token = req.cookies.auth_token;
 

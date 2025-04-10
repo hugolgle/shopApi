@@ -8,6 +8,9 @@ const privateRoutes = {
   profile: {
     GET: false,
   },
+  file: {
+    POST: true,
+  },
   user: {
     GET: true,
     POST: false,
