@@ -19,7 +19,6 @@ import {
 } from "../select";
 import { categoryService } from "@/services/Category.service";
 import { Category } from "@/interface/category.interface";
-import { v4 as uuid } from "uuid";
 
 const validationSchema = yup.object().shape({
   name: yup.string().required("Product name is required"),
@@ -51,16 +50,24 @@ function FormProduct({
     refetchOnMount: false,
   });
 
-  const [file, setFile] = useState<File | null>(null);
+  const [url, setUrl] = useState<string>("");
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      const files = e.target.files[0];
-      const fileName = uuid();
-      const fileType = files.type.split("/")[1];
-      const filePath = `${fileName}.${fileType}`;
+      const file = e.target.files[0];
+      const formData = new FormData();
+      formData.append("file", file);
 
-      setFile(e.target.files[0]);
+      // Envoie au backend
+      const URL = import.meta.env.VITE_BACKEND_URL + "file";
+      const response = await fetch(URL, {
+        method: "POST",
+        credentials: "include",
+        body: formData,
+      });
+
+      const data = await response.json();
+      setUrl(data.url);
     }
   };
 
@@ -77,15 +84,9 @@ function FormProduct({
     validationSchema,
     validateOnMount: true,
     onSubmit: async (values: ProductForm) => {
-      let imagePath = "";
-
-      if (file) {
-        imagePath = await handleUpload();
-      }
-
       const newValues = {
         ...values,
-        imagePath,
+        imagePath: url,
         categoryId: parseFloat(values.categoryId),
       };
 
@@ -103,21 +104,6 @@ function FormProduct({
       toast.error(err.message);
     },
   });
-
-  const handleUpload = async (): Promise<string> => {
-    if (!file) return "";
-
-    const formData = new FormData();
-    formData.append("file", file);
-
-    try {
-      const res = await productService.uploadImage(formData);
-      return res.data.imagePath;
-    } catch (error) {
-      toast.error("Erreur lors de l’upload");
-      return "";
-    }
-  };
 
   return (
     <Fragment>

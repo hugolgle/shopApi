@@ -33,11 +33,7 @@ function Login() {
     validationSchema,
     validateOnMount: true,
     onSubmit: (values) => {
-      const newValues = {
-        ...values,
-        categoryId: parseFloat(values.categoryId),
-      };
-      mutation.mutate(newValues);
+      mutation.mutate(values);
       setIsLoading(true);
     },
   });

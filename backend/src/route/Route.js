@@ -12,7 +12,12 @@ class Route {
     const { model } = req.params;
 
     if (!model) {
-      throw new ApiError(400, "Model not found");
+      throw new ApiError(404, "Model not found");
+    }
+
+    const isPrismaModel = await this.prisma[model];
+    if (!isPrismaModel) {
+      throw new ApiError(404, "Unknown model");
     }
 
     const fields = excludeFields[model] || null;
@@ -27,7 +32,12 @@ class Route {
     const { model, id } = req.params;
 
     if (!model || !id) {
-      throw new ApiError(400, "Model or ID missing");
+      throw new ApiError(404, "Model or ID missing");
+    }
+
+    const isPrismaModel = await this.prisma[model];
+    if (!isPrismaModel) {
+      throw new ApiError(404, "Unknown model");
     }
 
     const fields = excludeFields[model] || null;
@@ -43,6 +53,11 @@ class Route {
   static async create(req, res) {
     const { model } = req.params;
     const { data } = req.body;
+
+    const isPrismaModel = await this.prisma[model];
+    if (!isPrismaModel) {
+      throw new ApiError(404, "Unknown model");
+    }
 
     if (!data || Object.keys(data).length === 0) {
       throw new ApiError(401, "Bad data or not found");
@@ -71,6 +86,11 @@ class Route {
 
     if (!model || !id) {
       throw new ApiError(400, "Model or ID missing");
+    }
+
+    const isPrismaModel = await this.prisma[model];
+    if (!isPrismaModel) {
+      throw new ApiError(404, "Unknown model");
     }
 
     if (!data || Object.keys(data).length === 0) {

@@ -1,6 +1,8 @@
 const express = require("express");
 const rateLimit = require("express-rate-limit");
 const cors = require("cors");
+const path = require("path");
+const fileUpload = require("express-fileupload");
 require("dotenv").config();
 const app = express();
 const port = 8000;
@@ -10,6 +12,7 @@ const route = require("./src/route/Route");
 const login = require("./src/route/LoginRoute");
 const checkout = require("./src/route/CheckoutRoute");
 const profile = require("./src/route/ProfileRoute");
+const file = require("./src/route/FileRoute");
 
 // Middleware
 const auth = require("./src/middleware/auth");
@@ -37,13 +40,15 @@ app.use(
     credentials: true,
   })
 );
-
+app.use(limiter);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
+app.use(fileUpload());
 
-app.use("/uploads", express.static("uploads"));
+// On définis le dossier "public" comme dossier static public
+app.use(express.static(path.join(__dirname, "public")));
 
 app.post(
   "/login",
@@ -82,6 +87,13 @@ app.post(
   auth,
   asyncHandler(async (req, res) => {
     await checkout.retrieveCheckoutSession(req, res);
+  })
+);
+app.post(
+  "/file",
+  auth,
+  asyncHandler(async (req, res) => {
+    await file.newFile(req, res);
   })
 );
 

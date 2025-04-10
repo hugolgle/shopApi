@@ -28,12 +28,11 @@ class ProductService {
     return response;
   }
 
-  async uploadImage(formData: FormData) {
-    const response = await axios.post(
-      import.meta.env.VITE_BACKEND_URL + `upload`,
-      formData,
+  async delete(data: string) {
+    const response = await axios.delete(
+      import.meta.env.VITE_BACKEND_URL + `product`,
       {
-        headers: { "Content-Type": "multipart/form-data" },
+        data: data,
         withCredentials: true,
       }
     );
