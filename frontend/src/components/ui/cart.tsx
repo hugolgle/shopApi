@@ -58,7 +58,8 @@ function Cart() {
           <p className="w-full">
             Total TTC :{" "}
             {cart.reduce(
-              (acc, next) => (acc += next.unit_price * next.quantity),
+              (acc, next) =>
+                (acc += next.unit_price * next.quantity).toFixed(2),
               0
             )}{" "}
             €
